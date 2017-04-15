@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context="com.example.yrrah.yrrahmoney.indexActivity">
+
+    <TextView
+        android:id="@+id/indexTextView"
+        android:layout_width="129dp"
+        android:layout_height="104dp"
+        android:text="IndexTextView"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="191dp"
+        app:layout_constraintDimensionRatio="h,1:1" />
+</android.support.constraint.ConstraintLayout>
