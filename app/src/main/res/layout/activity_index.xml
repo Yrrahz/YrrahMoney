@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="com.example.yrrah.yrrahmoney.indexActivity">
+    tools:context="com.example.yrrah.yrrahmoney.addAndConfigureActivity">
 
     <TextView
         android:id="@+id/indexTextView"

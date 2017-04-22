@@ -14,18 +14,19 @@ public class mainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void testButtonToast(View view){
-        Toast.makeText(getApplicationContext(),"testButton pressed in mainActivity",Toast.LENGTH_SHORT).show();
-
-        testMethod();
+    public void categoryButtonPressed(View view){
+        int choice = Integer.parseInt(view.getTag().toString());
+        Toast.makeText(getApplicationContext(),"categoryButton "+choice,Toast.LENGTH_SHORT).show();
+        addAndConfigure(choice);
     }
 
     /**
-     * Detta är så som vi gjorde i vårt exJobb, men det känns en aning... fel.
-     * Eller i alla fall att det vore värt att kolla i hur man annars kan göra.
+     * addAndConfigure - Denna metod kan vara som startNewActivity.
+     * I alla fall i dagsläget.
      */
-    private void testMethod(){
-        Intent intent = new Intent(this, indexActivity.class);
+    private void addAndConfigure(int choice){
+        Intent intent = new Intent(this, addAndConfigureActivity.class);
+        intent.putExtra("choice", choice);
         startActivity(intent);
     }
 }
