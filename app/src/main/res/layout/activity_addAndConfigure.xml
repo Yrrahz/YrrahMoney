@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context="com.example.yrrah.yrrahmoney.addAndConfigureActivity">
+
+    <TextView
+        android:id="@+id/addAndConfigureTextView"
+        android:layout_width="212dp"
+        android:layout_height="154dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="IndexTextView"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addAndConfigureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/categoryButtonText"
+        app:layout_constraintTop_toTopOf="@+id/addAndConfigureTextView"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addAndConfigureTextView"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.877"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/addAndConfigureTextView"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView" />
+
+    <EditText
+        android:id="@+id/numberToAddAndConfigure"
+        android:layout_width="165dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/addAndConfigureButton"
+        app:layout_constraintLeft_toLeftOf="@+id/addAndConfigureTextView"
+        app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView" />
+
+</android.support.constraint.ConstraintLayout>

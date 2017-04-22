@@ -23,6 +23,8 @@ public class mainActivity extends AppCompatActivity {
     /**
      * addAndConfigure - Denna metod kan vara som startNewActivity.
      * I alla fall i dagsläget.
+     *
+     * int choice - Vilken knapp som trycktes, uppifrån och ner, 1-N
      */
     private void addAndConfigure(int choice){
         Intent intent = new Intent(this, addAndConfigureActivity.class);
