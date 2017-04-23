@@ -22,7 +22,8 @@
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:labelFor="@id/numberToAddAndConfigure"/>
 
     <Button
         android:id="@+id/addAndConfigureButton"
@@ -37,7 +38,8 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/addAndConfigureTextView"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView" />
+        app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView"
+        android:onClick="addConfigureNumber"/>
 
     <EditText
         android:id="@+id/numberToAddAndConfigure"
