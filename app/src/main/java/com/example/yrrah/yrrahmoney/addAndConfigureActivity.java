@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class addAndConfigureActivity extends AppCompatActivity {
 
@@ -13,10 +14,12 @@ public class addAndConfigureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addAndConfigure);
+        setContentView(R.layout.activity_add_and_configure);
 
         Intent intent = getIntent();
         buttonChoice = intent.getExtras().getInt("choice");
+
+        findLabel();
     }
 
     /**
@@ -27,7 +30,15 @@ public class addAndConfigureActivity extends AppCompatActivity {
      * @param view - I dont actually know what this is.
      */
     public void addConfigureNumber(View view){
-        EditText editNumberToAdd = (EditText) findViewById(R.id.numberToAddAndConfigure);
+        EditText editNumberToAdd = (EditText) findViewById(R.id.addAndConfigureNumber);
         int numberToAdd = Integer.parseInt(editNumberToAdd.getText().toString());
+    }
+
+    // TODO: restructure how categoryButtons and categoryTexts are created. Then update this.
+    private void findLabel(){
+        TextView textLabel = (TextView) findViewById(R.id.addAndConfigureTextView);
+        //textLabel.setText(getString(R.string.app_name + buttonChoice));
+
+
     }
 }
