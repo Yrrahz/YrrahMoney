@@ -27,8 +27,16 @@ public class mainActivity extends AppCompatActivity {
      * int choice - Vilken knapp som trycktes, uppifrån och ner, 1-N
      */
     private void addAndConfigure(int choice){
+        Intent intent = new Intent(this, development2Activity.class);
+        intent.putExtra("choice", choice);
+        startActivity(intent);
+    }
+
+    /*
+    private void addAndConfigure(int choice){
         Intent intent = new Intent(this, addAndConfigureActivity.class);
         intent.putExtra("choice", choice);
         startActivity(intent);
     }
+     */
 }
