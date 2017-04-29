@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class mainActivity extends AppCompatActivity {
+public class activityAttempt1 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_attempt1);
     }
 
     public void categoryButtonPressed(View view){

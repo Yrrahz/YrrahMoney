@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">YrrahMoney</string>
-    <string name="categoryButtonText">Add</string>
+    <string name="categoryButtonAdd">Add</string>
+    <string name="categoryAddAndConfigure">Add and Configure</string>
+
     <string name="category1Text">Category1Text</string>
     <string name="category2text">Category2Text</string>
     <string name="category3text">Category3Text</string>
     <string name="category4Text">Category4Text</string>
+
+    <string name="addAmount">Add Amount</string>
 </resources>

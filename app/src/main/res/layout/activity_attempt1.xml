@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:onClick="categoryButtonPressed"
-                android:text="@string/categoryButtonText"
+                android:text="@string/categoryButtonAdd"
                 android:tag="1"/>
         </TableRow>
 
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:onClick="categoryButtonPressed"
-                android:text="@string/categoryButtonText"
+                android:text="@string/categoryButtonAdd"
                 android:tag="2"/>
 
         </TableRow>
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:onClick="categoryButtonPressed"
-                android:text="@string/categoryButtonText"
+                android:text="@string/categoryButtonAdd"
                 android:tag="3"/>
         </TableRow>
 
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:onClick="categoryButtonPressed"
-                android:text="@string/categoryButtonText"
+                android:text="@string/categoryButtonAdd"
                 android:tag="4"/>
         </TableRow>
 
