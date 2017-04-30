@@ -17,20 +17,30 @@ public class mainActivity extends AppCompatActivity {
     public void categoryButtonPressed(View view){
         int choice = Integer.parseInt(view.getTag().toString());
         Toast.makeText(getApplicationContext(),"categoryButton "+choice,Toast.LENGTH_SHORT).show();
-        addAndConfigure(choice);
-    }
 
+    }
+}
+
+
+
+
+
+
+
+// ===================== OLD CODE ============================
+//addAndConfigure(choice);
+    /*
     /**
      * addAndConfigure - Denna metod kan vara som startNewActivity.
      * I alla fall i dagsläget.
      *
      * int choice - Vilken knapp som trycktes, uppifrån och ner, 1-N
-     */
+     *
     private void addAndConfigure(int choice){
         Intent intent = new Intent(this, development2Activity.class);
         intent.putExtra("choice", choice);
         startActivity(intent);
-    }
+    }*/
 
     /*
     private void addAndConfigure(int choice){
@@ -39,4 +49,3 @@ public class mainActivity extends AppCompatActivity {
         startActivity(intent);
     }
      */
-}
