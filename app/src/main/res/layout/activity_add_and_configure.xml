@@ -22,7 +22,9 @@
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/addAndConfigureButton"
@@ -38,7 +40,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/addAndConfigureTextView"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView"
-        android:onClick="addConfigureNumber"/>
+        android:onClick="addConfigureNumber"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/addAndConfigureNumber"
@@ -52,6 +56,8 @@
         android:hint="@string/addAmount"
         app:layout_constraintBottom_toTopOf="@+id/addAndConfigureButton"
         app:layout_constraintLeft_toLeftOf="@+id/addAndConfigureTextView"
-        app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView" />
+        app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

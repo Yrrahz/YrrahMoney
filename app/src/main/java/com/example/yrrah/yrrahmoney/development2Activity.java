@@ -1,5 +1,6 @@
 package com.example.yrrah.yrrahmoney;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,9 +35,11 @@ public class development2Activity extends AppCompatActivity {
         Button addBtn;
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
 
+
+        // TODO : be able to update each of the textviews by it's "Add" button.
         row.setLayoutParams(lp);
         tv = new TextView(this);
-        tv.setText("helloWorld"+(i+1));
+        tv.setText("helloWorld"+(i+1)); //this is not intended, currently just a placeholder.
         addBtn = new Button(this);
         //addBtn.setId(View.generateViewId()); // Do I need this?
         addBtn.setText(R.string.categoryButtonAdd);
@@ -51,6 +54,9 @@ public class development2Activity extends AppCompatActivity {
 
     public void addButtonClicked(View view){
         Toast.makeText(getApplicationContext(),"Button Works!",Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, addAndConfigureActivity.class);
+        startActivity(intent);
     }
 }
 
