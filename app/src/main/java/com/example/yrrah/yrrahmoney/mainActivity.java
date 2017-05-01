@@ -15,9 +15,8 @@ public class mainActivity extends AppCompatActivity {
     }
 
     public void categoryButtonPressed(View view){
-        int choice = Integer.parseInt(view.getTag().toString());
-        Toast.makeText(getApplicationContext(),"categoryButton "+choice,Toast.LENGTH_SHORT).show();
-
+        Intent intent = new Intent(this, Dev4Activity.class);
+        startActivity(intent);
     }
 }
 
