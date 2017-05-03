@@ -8,9 +8,17 @@
     android:id="@+id/listViewLayout"
     tools:context="com.example.yrrah.yrrahmoney.Dev4Activity">
 
+    <Button
+        android:id="@+id/addCategoryButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/categoryButtonText" />
+
     <ListView
         android:id="@+id/listA"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/addCategoryButton"
+        android:paddingTop="10dp" />
 </RelativeLayout>
