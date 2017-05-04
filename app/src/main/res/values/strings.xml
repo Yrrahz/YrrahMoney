@@ -5,4 +5,5 @@
     <string name="category2text">Category2Text</string>
     <string name="category3text">Category3Text</string>
     <string name="category4Text">Category4Text</string>
+    <string name="totalAmount">Total Amount:</string>
 </resources>

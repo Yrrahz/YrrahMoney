@@ -27,6 +27,10 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         testMethod();
     }
 
+    public void onAddButtonClick(View view){
+        Toast.makeText(getApplicationContext(),"Add button clicked!", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 

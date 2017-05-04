@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/colorAccentDarker"
     android:id="@+id/listViewLayout"
     tools:context="com.example.yrrah.yrrahmoney.Dev4Activity">
 
@@ -13,12 +13,37 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/categoryButtonText" />
+        android:text="@string/categoryButtonText"
+        android:onClick="onAddButtonClick"/>
 
     <ListView
         android:id="@+id/listA"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/addCategoryButton"
-        android:paddingTop="10dp" />
+        android:background="@color/colorAccent"
+        android:layout_marginBottom="35dp"/>
+
+    <TextView
+        android:id="@+id/totalAmountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/totalAmount"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorAccentDarker"
+        android:paddingStart="10dp"/>
+
+    <TextView
+        android:id="@+id/amountResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="30sp"
+        android:paddingEnd="10dp"
+        android:text="12345"/>
+
 </RelativeLayout>
