@@ -18,6 +18,8 @@ import java.util.Map;
 public class Dev4Activity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     List<Map<String, String>> data = new ArrayList<>();
+    private static final String categoryTitle = "item";
+    private static final String categoryData = "subItem";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +30,16 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void onAddButtonClick(View view){
-        Toast.makeText(getApplicationContext(),"Add button clicked!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Add Category button clicked!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String s = data.get(position).get("item");
+        String s = data.get(position).get(categoryTitle);
+        String t = data.get(position).get(categoryData);
 
-        Toast.makeText(getApplicationContext(),"Position: "+position+"  id: "+id+"  Category: "+s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Category: "+s+" data: "+t, Toast.LENGTH_SHORT).show();
 
 
         /*
@@ -59,8 +62,8 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
 
         for(int i=0 ; i<20 ; i++){
             Map<String, String> dateMap = new HashMap<>(2);
-            dateMap.put("item","Category "+(i+1));
-            dateMap.put("subItem","Total Amount: "+(i+10));
+            dateMap.put(categoryTitle,"Category "+(i+1));
+            dateMap.put(categoryData,"Total Amount: "+(i+10));
 
             data.add(dateMap);
         }
@@ -69,7 +72,7 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
 
         SimpleAdapter adapter = new SimpleAdapter(this, data,
                 android.R.layout.simple_list_item_2, // <-- Standard lib item, contains both Item and SubItem in listView
-                new String[] {"item","subItem"}, // <-- must be same as dateMap's keys
+                new String[] {categoryTitle,categoryData}, // <-- must be same as dateMap's keys
                 new int[] {android.R.id.text1, android.R.id.text2});
 
 

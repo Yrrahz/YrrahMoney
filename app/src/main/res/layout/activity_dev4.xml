@@ -13,7 +13,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/categoryButtonText"
+        android:text="@string/addCategoryButton"
         android:onClick="onAddButtonClick"/>
 
     <ListView
@@ -43,7 +43,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:textSize="30sp"
-        android:paddingEnd="10dp"
-        android:text="12345"/>
+        android:paddingEnd="10dp"/>
 
 </RelativeLayout>
