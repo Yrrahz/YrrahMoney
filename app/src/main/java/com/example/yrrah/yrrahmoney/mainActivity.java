@@ -18,6 +18,30 @@ public class mainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Dev4Activity.class);
         startActivity(intent);
     }
+
+
+    /**
+     * TestDB lyckades! Vi kan skapa och hämta data ur databasen.
+     * Appen crashar om man försöker hämta data från en category som
+     * inte finns.
+     */
+    public void testDB(View view){
+        CategoryModel cm = new CategoryModel("Transport", 1337);
+        DBHandler dbHandler = new DBHandler(this);
+
+        dbHandler.addCategory(cm);
+
+        int test = dbHandler.getCategoryModel("Transport").getTotalAmount();
+
+        Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
+    }
+
+    public void testDB2(View view){
+        DBHandler dbHandler = new DBHandler(this);
+
+        int test = dbHandler.getCategoryModel("Transport").getTotalAmount();
+        Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
+    }
 }
 
 

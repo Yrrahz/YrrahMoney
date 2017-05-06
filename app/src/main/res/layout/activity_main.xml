@@ -27,22 +27,42 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.015" />
 
-    <ExpandableListView
-        android:id="@+id/expList"
-        android:layout_width="308dp"
-        android:layout_height="370dp"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
-        android:divider="@color/colorPrimary"
-        android:dividerHeight="1dp"
-        android:listSelector="#666"
-        android:childDivider="@color/colorPrimaryDark"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        android:onClick="testDB"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddAndConfig" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddAndConfig"
+        app:layout_constraintVertical_bias="0.167"
+        tools:text="Test Database" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        android:onClick="testDB2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.221"
+        tools:text="test Database 2" />
+
 </android.support.constraint.ConstraintLayout>
 
 
