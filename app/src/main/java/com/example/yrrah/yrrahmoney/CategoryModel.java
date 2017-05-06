@@ -13,6 +13,10 @@ public class CategoryModel {
         this.totalAmount = totalAmount;
     }
 
+    public CategoryModel(){
+
+    }
+
     public void setName(String name){
         this.name = name;
     }

@@ -59,16 +59,16 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void testMethod(){
+        DBHandler dbHandler = new DBHandler(this);
+        List<CategoryModel> listOfCategories = dbHandler.getAllCategories();
 
-        for(int i=0 ; i<20 ; i++){
-            Map<String, String> dateMap = new HashMap<>(2);
-            dateMap.put(categoryTitle,"Category "+(i+1));
-            dateMap.put(categoryData,"Total Amount: "+(i+10));
+        for(CategoryModel cm: listOfCategories){
+            Map<String, String> listViewElement = new HashMap<>(2);
+            listViewElement.put(categoryTitle, cm.getName());
+            listViewElement.put(categoryData,"Total Amount: "+cm.getTotalAmount());
 
-            data.add(dateMap);
+            data.add(listViewElement);
         }
-
-
 
         SimpleAdapter adapter = new SimpleAdapter(this, data,
                 android.R.layout.simple_list_item_2, // <-- Standard lib item, contains both Item and SubItem in listView
@@ -79,6 +79,27 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         ListView presentData = (ListView) findViewById(R.id.listA);
         presentData.setOnItemClickListener(this);
         presentData.setAdapter(adapter);
-
     }
+
+    /*
+    private void testMethod(){
+
+        for(int i=0 ; i<20 ; i++){
+            Map<String, String> dateMap = new HashMap<>(2);
+            dateMap.put(categoryTitle,"Category "+(i+1));
+            dateMap.put(categoryData,"Total Amount: "+(i+10));
+
+            data.add(dateMap);
+        }
+        SimpleAdapter adapter = new SimpleAdapter(this, data,
+                android.R.layout.simple_list_item_2, // <-- Standard lib item, contains both Item and SubItem in listView
+                new String[] {categoryTitle,categoryData}, // <-- must be same as dateMap's keys
+                new int[] {android.R.id.text1, android.R.id.text2});
+
+
+        ListView presentData = (ListView) findViewById(R.id.listA);
+        presentData.setOnItemClickListener(this);
+        presentData.setAdapter(adapter);
+
+    }*/
 }

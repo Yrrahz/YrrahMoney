@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Yrrah on 2017-05-05.
  */
@@ -18,7 +21,7 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "YrrahMoneyDB";
     // Contacts table name
     private static final String TABLE_CATEGORY = "category";
-    // Shops Table Columns names
+    // cms Table Columns names
     private static final String KEY_NAME = "name";
     private static final String COL_TOTAL_AMOUNT = "totalamount";
 
@@ -26,7 +29,7 @@ public class DBHandler extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Adding new shop
+    // Adding new cm
     public void addCategory(CategoryModel cm) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -57,6 +60,27 @@ public class DBHandler extends SQLiteOpenHelper{
         return contact;
     }
 
+    // Getting All Categories
+    public List<CategoryModel> getAllCategories() {
+        List<CategoryModel> cmList = new ArrayList<>();
+    // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_CATEGORY;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+    // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                CategoryModel cm = new CategoryModel();
+                cm.setName(cursor.getString(0));
+                cm.setTotalAmount(Integer.parseInt(cursor.getString(1)));
+                cmList.add(cm);
+            } while (cursor.moveToNext());
+        }
+    // return contact list
+        cursor.close();
+        return cmList;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
@@ -70,5 +94,9 @@ public class DBHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         // Creating tables again
         onCreate(db);
+    }
+
+    private void populateDatabaseWithData(){
+        // TODO : Write this method. Populate the database with proper data.
     }
 }

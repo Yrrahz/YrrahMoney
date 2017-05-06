@@ -26,12 +26,16 @@ public class mainActivity extends AppCompatActivity {
      * inte finns.
      */
     public void testDB(View view){
-        CategoryModel cm = new CategoryModel("Transport", 1337);
+
         DBHandler dbHandler = new DBHandler(this);
 
-        dbHandler.addCategory(cm);
+        for(int i=0 ; i<20 ; i++){
+            CategoryModel cm = new CategoryModel("Transport"+i, 1337+i);
+            dbHandler.addCategory(cm);
+        }
 
-        int test = dbHandler.getCategoryModel("Transport").getTotalAmount();
+
+        int test = dbHandler.getCategoryModel("Transport3").getTotalAmount();
 
         Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
     }
