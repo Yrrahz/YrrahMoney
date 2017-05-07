@@ -25,6 +25,7 @@ public class mainActivity extends AppCompatActivity {
      * Appen crashar om man försöker hämta data från en category som
      * inte finns.
      */
+    /*
     public void testDB(View view){
 
         DBHandler dbHandler = new DBHandler(this);
@@ -38,14 +39,16 @@ public class mainActivity extends AppCompatActivity {
         int test = dbHandler.getCategoryModel("Transport3").getTotalAmount();
 
         Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
-    }
+    } */
 
     public void testDB2(View view){
         DBHandler dbHandler = new DBHandler(this);
+        dbHandler.populateDatabaseWithData();
 
-        int test = dbHandler.getCategoryModel("Transport").getTotalAmount();
-        Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
+        //int test = dbHandler.getCategoryModel("Transport").getTotalAmount();
+        //Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
     }
+
 }
 
 

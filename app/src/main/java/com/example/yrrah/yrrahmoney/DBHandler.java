@@ -81,6 +81,36 @@ public class DBHandler extends SQLiteOpenHelper{
         return cmList;
     }
 
+    // Getting Categories count, not sure if I need this...
+    public int getCategoriesCount() {
+        int count;
+        String countQuery = "SELECT * FROM " + TABLE_CATEGORY;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+
+    // Updating a Category
+    public int updateCategory(CategoryModel cm) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_TOTAL_AMOUNT, cm.getTotalAmount());
+    // updating row
+        return db.update(TABLE_CATEGORY, values, KEY_NAME + " = ?",
+                new String[]{String.valueOf(cm.getName())});
+    }
+
+    // Deleting a shop
+    public void deleteCategory(CategoryModel cm) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CATEGORY, KEY_NAME + " = ?",
+                new String[] { String.valueOf(cm.getName()) });
+        db.close();
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
@@ -96,7 +126,32 @@ public class DBHandler extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    private void populateDatabaseWithData(){
-        // TODO : Write this method. Populate the database with proper data.
+
+
+    public void populateDatabaseWithData(){
+        // Expenditure
+        CategoryModel cm = new CategoryModel("Transport", 1000);
+        addCategory(cm);
+        cm = new CategoryModel("Food",2000);
+        addCategory(cm);
+        cm = new CategoryModel("Eating Out",2000);
+        addCategory(cm);
+        cm = new CategoryModel("Rent",4500);
+        addCategory(cm);
+        cm = new CategoryModel("Hygiene",250);
+        addCategory(cm);
+        cm = new CategoryModel("Entertainment",5412);
+        addCategory(cm);
+        cm = new CategoryModel("Gifts",397);
+        addCategory(cm);
+        cm = new CategoryModel("Bills",4750);
+        addCategory(cm);
+        cm = new CategoryModel("Other",3713);
+        addCategory(cm);
+        // Income
+        cm = new CategoryModel("Salary",19000);
+        addCategory(cm);
+        cm = new CategoryModel("Other Income",500);
+        addCategory(cm);
     }
 }
