@@ -1,0 +1,24 @@
+Project: YrrahMoney
+	Branches: 	
+	✔		dev4 - First Design branch
+	✔		dev5 - Develop a Database
+			dev6 - Extend Database with SubAmount and negative amount
+			dev7 - More design to AAC and dev4Activity
+			dev8 - Restructure Database to include months + namechange of categories
+			dev9 - Develop MainActivity
+			devA - Visual presentation, diagrams
+			devB - Compare months, more statistics
+			---- 
+			ext1 - ExpListView instead of ListView
+			ext2 - test-classes
+			ext3 - Sharing statistics to GDrive, or similair
+			ext4 - Android Wear functions
+	Details:
+			ext4:
+				Kunna skriva in en siffra, sedan välja kategori.
+
+Other ideas:
+			Mirrored Painting Application
+			MusicPlayer
+			Bollyard
+			Tetris
