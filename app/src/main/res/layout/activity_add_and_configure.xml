@@ -26,8 +26,8 @@
 
     <Button
         android:id="@+id/addAndConfigureButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="173dp"
+        android:layout_height="43dp"
         android:text="@string/categoryButtonText"
         app:layout_constraintTop_toTopOf="@+id/addAndConfigureTextView"
         android:layout_marginTop="8dp"
@@ -49,6 +49,7 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="number"
+        android:hint="@string/addAmount"
         app:layout_constraintBottom_toTopOf="@+id/addAndConfigureButton"
         app:layout_constraintLeft_toLeftOf="@+id/addAndConfigureTextView"
         app:layout_constraintRight_toRightOf="@+id/addAndConfigureTextView" />

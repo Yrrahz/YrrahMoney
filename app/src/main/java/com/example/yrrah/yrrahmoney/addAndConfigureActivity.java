@@ -1,5 +1,6 @@
 package com.example.yrrah.yrrahmoney;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,8 @@ import android.widget.TextView;
 
 public class addAndConfigureActivity extends AppCompatActivity {
 
-    int buttonChoice;
+    String categoryTitle;
+    String categoryData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +19,8 @@ public class addAndConfigureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_and_configure);
 
         Intent intent = getIntent();
-        buttonChoice = intent.getExtras().getInt("choice");
+        categoryTitle = intent.getExtras().getString("categoryTitle");
+        categoryData = intent.getExtras().getString("categoryData");
 
         findLabel();
     }
@@ -32,13 +35,16 @@ public class addAndConfigureActivity extends AppCompatActivity {
     public void addConfigureNumber(View view){
         EditText editNumberToAdd = (EditText) findViewById(R.id.addAndConfigureNumber);
         int numberToAdd = Integer.parseInt(editNumberToAdd.getText().toString());
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result",numberToAdd);
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 
-    // TODO: restructure how categoryButtons and categoryTexts are created. Then update this.
     private void findLabel(){
         TextView textLabel = (TextView) findViewById(R.id.addAndConfigureTextView);
-        //textLabel.setText(getString(R.string.app_name + buttonChoice));
-
-
+        String label = "Category: "+categoryTitle;
+        textLabel.setText(label);
     }
 }

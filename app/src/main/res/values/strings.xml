@@ -2,6 +2,7 @@
     <string name="app_name">YrrahMoney</string>
     <string name="categoryButtonText">Add</string>
     <string name="addCategoryButton">Add Category</string>
+    <string name="addAmount">Add Amount</string>
     <string name="category1Text">Category1Text</string>
     <string name="category2text">Category2Text</string>
     <string name="category3text">Category3Text</string>

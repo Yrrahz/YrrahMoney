@@ -1,5 +1,7 @@
 package com.example.yrrah.yrrahmoney;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,14 +45,38 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(getApplicationContext(),"Database Table Update: "+test, Toast.LENGTH_SHORT).show();
     }
 
+    /*** START
+     * dev7 development - More design to AAC and dev4Activity
+     ***/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String s = data.get(position).get(categoryTitle);
-        String t = data.get(position).get(categoryData);
+        Intent returnIntent = new Intent(this, addAndConfigureActivity.class);
+        returnIntent.putExtra("categoryTitle",data.get(position).get(categoryTitle));
+        returnIntent.putExtra("categoryData",data.get(position).get(categoryData));
 
-        Toast.makeText(getApplicationContext(),"Category: "+s+" data: "+t, Toast.LENGTH_SHORT).show();
+        startActivityForResult(returnIntent,1);
+        //startActivity(returnIntent);
+        //Toast.makeText(getApplicationContext(),"Category: "+s+" data: "+t, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                int result = data.getIntExtra("result",-1);
+                Toast.makeText(getApplicationContext(),"Success..." + result, Toast.LENGTH_SHORT).show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+                Toast.makeText(getApplicationContext(),"No data collected...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    /*** END
+     * dev7 development - More design to AAC and dev4Activity
+     ***/
 
     private void populateListView(){
 
