@@ -36,11 +36,15 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
     // This method has been used a lot for testing functions. But should go to AAC!
     public void onAddButtonClick(View view){
 
-        int test = dbHandler.updateCategory(new CategoryModel("Transport",0));
-        dbHandler.deleteCategory(new CategoryModel("Rent",0));
+        //int test = dbHandler.updateCategory(new CategoryModel("Transport",0)); // Test Catategory Update method
+        //dbHandler.deleteCategory(new CategoryModel("Rent",0)); // Test Category Delete method
 
-        Toast.makeText(getApplicationContext(),"Database Table Count: "+dbHandler.getCategoriesCount(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(),"Database Table Update: "+test, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Database Table Count: "+dbHandler.getCategoriesCount(), Toast.LENGTH_SHORT).show(); // Count Categories
+        //Toast.makeText(getApplicationContext(),"Database Table Update: "+test, Toast.LENGTH_SHORT).show(); // Just checking the int response from update method
+
+        SubAmountModel sam = dbHandler.getSubAmountModel(3);
+        Toast.makeText(getApplicationContext(),"SubAmount: "+sam.getAmount()+" to Category; "
+                + sam.getRefID(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

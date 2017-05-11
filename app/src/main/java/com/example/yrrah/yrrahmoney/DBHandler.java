@@ -19,17 +19,25 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
     // Database Name
     private static final String DATABASE_NAME = "YrrahMoneyDB";
-    // Contacts table name
+    // table names
     private static final String TABLE_CATEGORY = "category";
-    // cms Table Columns names
-    private static final String KEY_NAME = "name";
+    private static final String TABLE_SUBAMOUNT = "subamount"; //weak
+    // Category Table Column names
+    private static final String KEY_NAME = "name"; //key
     private static final String COL_TOTAL_AMOUNT = "totalamount";
+    // SubAmount Table Column names
+    private static final String KEY_ID = "subAmountId"; //key <-- could be the same as KEY_NAME
+    private static final String COL_AMOUNT = "amount";
+    private static final String COL_EVENT = "event";
+    private static final String COL_REFID = "refid";
+
 
     public DBHandler(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Adding new cm
+    //<editor-fold desc="Category methods">
+    // Adding new Category
     public void addCategory(CategoryModel cm) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -40,7 +48,7 @@ public class DBHandler extends SQLiteOpenHelper{
         db.close(); // Closing database connection
     }
 
-    // Getting one Category
+    // Getting one Category TODO: Restructure this, like SAM
     public CategoryModel getCategoryModel(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CATEGORY, new String[] { KEY_NAME, COL_TOTAL_AMOUNT },
@@ -110,8 +118,13 @@ public class DBHandler extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(COL_TOTAL_AMOUNT, cm.getTotalAmount());
     // updating row
-        return db.update(TABLE_CATEGORY, values, KEY_NAME + " = ?",
+        int returnValue = db.update(TABLE_CATEGORY, values, KEY_NAME + " = ?",
                 new String[]{String.valueOf(cm.getName())});
+        //Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
+        return returnValue;
     }
 
     // Deleting a shop
@@ -121,18 +134,92 @@ public class DBHandler extends SQLiteOpenHelper{
                 new String[] { String.valueOf(cm.getName()) });
         db.close();
     }
+    //</editor-fold>
+
+    //<editor-fold desc="SubAmount methods">
+    //=================================================
+    // Adding new SubAmount
+    public void addSubAmount(SubAmountModel sam) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_ID, sam.getSubAmountId());
+        values.put(COL_AMOUNT, sam.getAmount());
+        values.put(COL_EVENT, sam.getEvent());
+        values.put(COL_REFID, sam.getRefID());
+        // Inserting Row
+        db.insert(TABLE_SUBAMOUNT, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public SubAmountModel getSubAmountModel(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT + " WHERE "
+                + KEY_ID + " = " + id;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        SubAmountModel sam = new SubAmountModel();
+        if (c != null) {
+            c.moveToFirst();
+
+            sam.setSubAmountId(c.getInt(c.getColumnIndex(KEY_ID)));
+            sam.setAmount(c.getInt(c.getColumnIndex(COL_AMOUNT)));
+            sam.setEvent(c.getString(c.getColumnIndex(COL_EVENT)));
+            sam.setRefID(c.getString(c.getColumnIndex(COL_REFID)));
+            c.close();
+        }
+        return sam;
+    }
+
+    // TODO: Test this!
+    public List<SubAmountModel> getSubAmounts() {
+        List<SubAmountModel> subAmountList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                SubAmountModel sam = new SubAmountModel();
+                sam.setSubAmountId(c.getInt(c.getColumnIndex(KEY_ID)));
+                sam.setAmount(c.getInt(c.getColumnIndex(COL_AMOUNT)));
+                sam.setEvent(c.getString(c.getColumnIndex(COL_EVENT)));
+                sam.setRefID(c.getString(c.getColumnIndex(COL_REFID)));
+
+                subAmountList.add(sam);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return subAmountList;
+    }
+
+
+    //</editor-fold>
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
-        + KEY_NAME + " VARCHAR(50) PRIMARY KEY," + COL_TOTAL_AMOUNT + " INTEGER" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
+                + KEY_NAME + " VARCHAR(50) PRIMARY KEY," + COL_TOTAL_AMOUNT + " INTEGER)";
+
+        String CREATE_SUBAMOUNT_TABLE = "CREATE TABLE " + TABLE_SUBAMOUNT + "("
+                + KEY_ID + " INTEGER PRIMARY KEY," + COL_AMOUNT + " INTEGER,"
+                + COL_EVENT + " VARCHAR(50)," + COL_REFID + " VARCHAR(50),"
+                + "CONSTRAINT fk FOREIGN KEY(" + COL_REFID
+                + ") REFERENCES "+ TABLE_CATEGORY + "(" + KEY_NAME + "))";
+
+        db.execSQL(CREATE_CATEGORY_TABLE);
+        db.execSQL(CREATE_SUBAMOUNT_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBAMOUNT);
         // Creating tables again
         onCreate(db);
     }
@@ -140,6 +227,7 @@ public class DBHandler extends SQLiteOpenHelper{
 
 
     public void populateDatabaseWithData(){
+        // Category
         // Expenditure
         CategoryModel cm = new CategoryModel("Transport", 1000);
         addCategory(cm);
@@ -164,5 +252,15 @@ public class DBHandler extends SQLiteOpenHelper{
         addCategory(cm);
         cm = new CategoryModel("Other Income",500);
         addCategory(cm);
+
+        // SubAmount
+        SubAmountModel sam = new SubAmountModel(1,100,"Resa hem","Transport");
+        addSubAmount(sam);
+        sam = new SubAmountModel(2,130,"Resa bort", "Transport");
+        addSubAmount(sam);
+        sam = new SubAmountModel(3,180,"Mat", "Food");
+        addSubAmount(sam);
+        sam = new SubAmountModel(4,250,"Ett nytt spel","Entertainment");
+        addSubAmount(sam);
     }
 }
