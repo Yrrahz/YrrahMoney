@@ -169,11 +169,14 @@ public class DBHandler extends SQLiteOpenHelper{
             sam.setRefID(c.getString(c.getColumnIndex(COL_REFID)));
             c.close();
         }
+        // Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
         return sam;
     }
 
-    // TODO: Test this!
-    public List<SubAmountModel> getSubAmounts() {
+    public List<SubAmountModel> getAllSubAmounts() {
         List<SubAmountModel> subAmountList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT;
 
@@ -194,9 +197,42 @@ public class DBHandler extends SQLiteOpenHelper{
         }
 
         c.close();
+        // Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
         return subAmountList;
     }
 
+    public List<SubAmountModel> getAllSubToCategory(String category) {
+        List<SubAmountModel> subAmountList = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT + " WHERE " +
+                COL_REFID + " = " + category;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                SubAmountModel sam = new SubAmountModel();
+                sam.setSubAmountId(c.getInt(c.getColumnIndex(KEY_ID)));
+                sam.setAmount(c.getInt(c.getColumnIndex(COL_AMOUNT)));
+                sam.setEvent(c.getString(c.getColumnIndex(COL_EVENT)));
+                sam.setRefID(c.getString(c.getColumnIndex(COL_REFID)));
+
+                subAmountList.add(sam);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        // Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
+        return subAmountList;
+    }
 
     //</editor-fold>
 
