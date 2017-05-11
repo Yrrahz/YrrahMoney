@@ -8,13 +8,15 @@ public class SubAmountModel {
     int subAmountId;
     int amount;
     String event;
+    String refID; // Reference to Category
 
     public SubAmountModel(){}
 
-    public SubAmountModel(int subAmountId, int amount, String event){
+    public SubAmountModel(int subAmountId, int amount, String event, String refID){
         this.subAmountId = subAmountId;
         this.amount = amount;
         this.event = event;
+        this.refID = refID;
     }
 
     public void setSubAmountId(int subAmountId){
@@ -29,6 +31,10 @@ public class SubAmountModel {
         this.event = event;
     }
 
+    public void setRefID(String refID) {
+        this.refID = refID;
+    }
+
     public int getSubAmountId() {
         return subAmountId;
     }
@@ -39,5 +45,9 @@ public class SubAmountModel {
 
     public String getEvent() {
         return event;
+    }
+
+    public String getRefID() {
+        return refID;
     }
 }
