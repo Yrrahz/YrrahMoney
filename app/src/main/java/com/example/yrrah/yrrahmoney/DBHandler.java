@@ -56,6 +56,10 @@ public class DBHandler extends SQLiteOpenHelper{
         if (cursor != null) {
             cursor.close();
         }
+        // Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
         // return Category
         return contact;
     }
@@ -78,6 +82,10 @@ public class DBHandler extends SQLiteOpenHelper{
         }
     // return contact list
         cursor.close();
+        //Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
         return cmList;
     }
 
@@ -89,7 +97,10 @@ public class DBHandler extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery(countQuery, null);
         count = cursor.getCount();
         cursor.close();
-
+        //Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
         return count;
     }
 
