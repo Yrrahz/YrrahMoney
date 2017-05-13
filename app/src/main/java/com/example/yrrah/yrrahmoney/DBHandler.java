@@ -97,7 +97,7 @@ public class DBHandler extends SQLiteOpenHelper{
         return cmList;
     }
 
-    // Getting Categories count, not sure if I need this...
+    // Getting Categories count, TODO: not sure if I need this... Check!
     public int getCategoriesCount() {
         int count;
         String countQuery = "SELECT * FROM " + TABLE_CATEGORY;
@@ -176,7 +176,6 @@ public class DBHandler extends SQLiteOpenHelper{
         return sam;
     }
 
-    // TODO: Test this!
     public List<SubAmountModel> getAllSubAmounts() {
         List<SubAmountModel> subAmountList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT;
@@ -209,7 +208,7 @@ public class DBHandler extends SQLiteOpenHelper{
         List<SubAmountModel> subAmountList = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT + " WHERE " +
-                COL_REFID + " = " + category;
+                TABLE_SUBAMOUNT + "." + COL_REFID + " = " + "'" + category + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
@@ -233,6 +232,35 @@ public class DBHandler extends SQLiteOpenHelper{
             db.close();
         }
         return subAmountList;
+    }
+
+    // TODO: Check if I need this.
+    // TODO: Test this!
+    public int updateSubAmount(SubAmountModel sam) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COL_EVENT, sam.getEvent());
+        values.put(COL_AMOUNT, sam.getAmount());
+
+        // updating row
+        int returnValue = db.update(TABLE_SUBAMOUNT, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(sam.getSubAmountId())});
+        // Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
+        return returnValue;
+    }
+
+    // TODO: Test this!
+    public void deleteSubAmount(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) });
+        if(db.isOpen()){
+            db.close();
+        }
     }
 
     //</editor-fold>
@@ -298,6 +326,12 @@ public class DBHandler extends SQLiteOpenHelper{
         sam = new SubAmountModel(3,180,"Mat", "Food");
         addSubAmount(sam);
         sam = new SubAmountModel(4,250,"Ett nytt spel","Entertainment");
+        addSubAmount(sam);
+        sam = new SubAmountModel(5,350,"Två nya spel","Entertainment");
+        addSubAmount(sam);
+        sam = new SubAmountModel(6,450,"Tre nya spel","Entertainment");
+        addSubAmount(sam);
+        sam = new SubAmountModel(7,1250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
     }
 }
