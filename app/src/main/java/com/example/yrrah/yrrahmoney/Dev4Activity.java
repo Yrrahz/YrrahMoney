@@ -44,9 +44,12 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         //Toast.makeText(getApplicationContext(),"Database Table Count: "+dbHandler.getCategoriesCount(), Toast.LENGTH_SHORT).show(); // Count Categories
         //Toast.makeText(getApplicationContext(),"Database Table Update: "+test, Toast.LENGTH_SHORT).show(); // Just checking the int response from update method
 
-        SubAmountModel sam = dbHandler.getSubAmountModel(3);
-        Toast.makeText(getApplicationContext(),"SubAmount: "+sam.getAmount()+" to Category; "
-                + sam.getRefID(), Toast.LENGTH_SHORT).show();
+        List<SubAmountModel> subAmountModelList = new ArrayList<>();
+        List<SubAmountModel> subAmountModelList2 = new ArrayList<>();
+        subAmountModelList = dbHandler.getAllSubAmounts();
+        subAmountModelList2 = dbHandler.getAllSubToCategory("Entertainment"); // All works!
+
+        Toast.makeText(getApplicationContext(),"Check Data", Toast.LENGTH_SHORT).show();
     }
 
     /*** START
