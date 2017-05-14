@@ -36,6 +36,7 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     // This method has been used a lot for testing functions. But should go to AAC!
+    // no! It should specifically go to add a Category! while the list click goes to AAC
     public void onAddButtonClick(View view){
 
         //int test = dbHandler.updateCategory(new CategoryModel("Transport",0)); // Test Catategory Update method

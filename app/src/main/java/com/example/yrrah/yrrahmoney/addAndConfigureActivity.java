@@ -20,7 +20,7 @@ public class addAndConfigureActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         categoryTitle = intent.getExtras().getString("categoryTitle");
-        categoryData = intent.getExtras().getString("categoryData");
+        categoryData = intent.getExtras().getString("categoryData"); // Dont think I need this like this. Get all subAmounts instead...
 
         findLabel();
     }
