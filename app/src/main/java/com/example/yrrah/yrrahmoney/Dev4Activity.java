@@ -72,11 +72,13 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                int result = data.getIntExtra("result",-1);
-                Toast.makeText(getApplicationContext(),"Success..." + result, Toast.LENGTH_SHORT).show();
+            if(resultCode == Activity.RESULT_OK){ // When "Add" button is pressed
+                int result = data.getIntExtra("amountToAdd",-1); // -1 is a default value. Propobly will never be used.
+                String event = data.getStringExtra("eventToAdd");
+                Toast.makeText(getApplicationContext(),"Success. Amount is: " + result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Success. Event is: " + event, Toast.LENGTH_SHORT).show();
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
+            if (resultCode == Activity.RESULT_CANCELED) { // When the 'back' button is pressed
                 //Write your code if there's no result
                 Toast.makeText(getApplicationContext(),"No data collected...", Toast.LENGTH_SHORT).show();
             }
