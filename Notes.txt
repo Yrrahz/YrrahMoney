@@ -15,11 +15,15 @@ Project: YrrahMoney
 			ext3 - Sharing statistics to GDrive, or similair
 			ext4 - Android Wear functions
 			ext5 - Proper structure within the project
+			ext6 - Kunna skriva kommentarer på events
 
 	Details:
 			dev7:
-				Efter att tryckt på en kategori i listan, så ska AAC visa alla subAmounts, lägga till subAmounts, läsa events, (visa statistics).
-				Lägg till AddCategoryClass. Bind till AAC-knappen ovanför listan.
+				Efter att tryckt på en kategori i listan, så ska AAC visa alla subAmounts, lägga till subAmounts, läsa events.
+				Lägg till AddCategoryClass. Bind till knappen ovanför listan.
+
+			devA:
+				visa statistics i AAC och även i ListView.
 
 			ext4:
 				Kunna skriva in en siffra, sedan välja kategori.

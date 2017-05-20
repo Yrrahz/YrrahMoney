@@ -333,5 +333,9 @@ public class DBHandler extends SQLiteOpenHelper{
         addSubAmount(sam);
         sam = new SubAmountModel(7,1250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
+        sam = new SubAmountModel(8,1450,"Fyra nya spel","Entertainment");
+        addSubAmount(sam);
+        sam = new SubAmountModel(9,250,"Fyra nya spel","Entertainment");
+        addSubAmount(sam);
     }
 }

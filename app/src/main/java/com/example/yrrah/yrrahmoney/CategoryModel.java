@@ -32,4 +32,17 @@ public class CategoryModel {
     public int getTotalAmount() {
         return totalAmount;
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        boolean sameSame = false;
+
+        if (object != null && object instanceof CategoryModel)
+        {
+            sameSame = this.name.equals(((CategoryModel) object).name);
+        }
+
+        return sameSame;
+    }
 }

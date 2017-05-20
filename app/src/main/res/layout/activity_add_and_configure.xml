@@ -43,7 +43,6 @@
         android:labelFor="@+id/addAndConfigureNumber"
         android:textAlignment="center"
         android:textSize="28sp"
-        android:hint="Category"
         app:layout_constraintDimensionRatio="h,1:1"
         tools:layout_editor_absoluteX="26dp"
         tools:layout_editor_absoluteY="31dp"
@@ -91,7 +90,6 @@
         android:id="@+id/totalEventsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Events: "
         android:textSize="18sp"
         android:layout_marginTop="28dp"
         android:layout_below="@+id/addAndConfigureTextView"
@@ -101,11 +99,10 @@
         android:id="@+id/totalAmountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Amount: "
-        android:textSize="18sp"
-        android:layout_below="@+id/totalEventsText"
         android:layout_alignStart="@+id/totalEventsText"
-        android:layout_marginTop="7dp" />
+        android:layout_below="@+id/totalEventsText"
+        android:layout_marginTop="7dp"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/showEventsButton"
@@ -113,6 +110,15 @@
         android:layout_height="wrap_content"
         android:text="show"
         android:layout_alignBottom="@+id/totalAmountText"
-        android:layout_alignEnd="@+id/addAndConfigureTextView" />
+        android:layout_alignEnd="@+id/addAndConfigureTextView"
+        android:onClick="onShowButtonClicked"/>
+
+    <Spinner
+        android:id="@+id/eventDropDownList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addEvent"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="25dp" />
 
 </RelativeLayout>
