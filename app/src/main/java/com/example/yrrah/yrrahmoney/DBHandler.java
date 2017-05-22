@@ -143,7 +143,7 @@ public class DBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(KEY_ID, sam.getSubAmountId());
+        //values.put(KEY_ID, sam.getSubAmountId());
         values.put(COL_AMOUNT, sam.getAmount());
         values.put(COL_EVENT, sam.getEvent());
         values.put(COL_REFID, sam.getRefID());
@@ -271,7 +271,7 @@ public class DBHandler extends SQLiteOpenHelper{
                 + KEY_NAME + " VARCHAR(50) PRIMARY KEY," + COL_TOTAL_AMOUNT + " INTEGER)";
 
         String CREATE_SUBAMOUNT_TABLE = "CREATE TABLE " + TABLE_SUBAMOUNT + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + COL_AMOUNT + " INTEGER,"
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_AMOUNT + " INTEGER,"
                 + COL_EVENT + " VARCHAR(50)," + COL_REFID + " VARCHAR(50),"
                 + "CONSTRAINT fk FOREIGN KEY(" + COL_REFID
                 + ") REFERENCES "+ TABLE_CATEGORY + "(" + KEY_NAME + "))";
@@ -319,23 +319,23 @@ public class DBHandler extends SQLiteOpenHelper{
         addCategory(cm);
 
         // SubAmount
-        SubAmountModel sam = new SubAmountModel(1,100,"Resa hem","Transport");
+        SubAmountModel sam = new SubAmountModel(0,100,"Resa hem","Transport");
         addSubAmount(sam);
-        sam = new SubAmountModel(2,130,"Resa bort", "Transport");
+        sam = new SubAmountModel(212,130,"Resa bort", "Transport");
         addSubAmount(sam);
-        sam = new SubAmountModel(3,180,"Mat", "Food");
+        sam = new SubAmountModel(3421,180,"Mat", "Food");
         addSubAmount(sam);
-        sam = new SubAmountModel(4,250,"Ett nytt spel","Entertainment");
+        sam = new SubAmountModel(434,250,"Ett nytt spel","Entertainment");
         addSubAmount(sam);
-        sam = new SubAmountModel(5,350,"Två nya spel","Entertainment");
+        sam = new SubAmountModel(511,350,"Två nya spel","Entertainment");
         addSubAmount(sam);
-        sam = new SubAmountModel(6,450,"Tre nya spel","Entertainment");
+        sam = new SubAmountModel(623,450,"Tre nya spel","Entertainment");
         addSubAmount(sam);
-        sam = new SubAmountModel(7,1250,"Fyra nya spel","Entertainment");
+        sam = new SubAmountModel(756,1250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
-        sam = new SubAmountModel(8,1450,"Fyra nya spel","Entertainment");
+        sam = new SubAmountModel(800,1450,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
-        sam = new SubAmountModel(9,250,"Fyra nya spel","Entertainment");
+        sam = new SubAmountModel(19,250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
     }
 }

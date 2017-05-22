@@ -4,7 +4,7 @@ Project: YrrahMoney
 	✔		dev4 - First Design branch
 	✔		dev5 - Develop a Database
 	✔		dev6 - Extend Database with SubAmount and negative amount
-			dev7 - More design to AAC and dev4Activity
+	✔		dev7 - More design to AAC and dev4Activity
 			dev8 - Restructure Database to include months + Datetime + namechange of categories
 			dev9 - Develop MainActivity, THE update functionality
 			devA - Visual presentation, diagrams, icons, pictures
@@ -21,6 +21,9 @@ Project: YrrahMoney
 			dev7:
 				Efter att tryckt på en kategori i listan, så ska AAC visa alla subAmounts, lägga till subAmounts, läsa events.
 				Lägg till AddCategoryClass. Bind till knappen ovanför listan.
+
+			dev8:
+				SubAmount behöver inte längre subAmountId. I alla fall så behöver den inte anges i konstruktorn, pga Auto-increment i databasen.
 
 			devA:
 				visa statistics i AAC och även i ListView.

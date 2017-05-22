@@ -56,6 +56,7 @@ public class addAndConfigureActivity extends AppCompatActivity {
             returnIntent.putExtra("eventToAdd", eventChoice); // Return varaible eventChoice from the DropDownList and call it "eventToAdd"
         }
 
+        returnIntent.putExtra("toCategory", categoryTitle);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
@@ -100,7 +101,10 @@ public class addAndConfigureActivity extends AppCompatActivity {
      * @param view -
      */
     public void onShowButtonClicked(View view){
-        Toast.makeText(getApplicationContext(),"Show button clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Show button clicked", Toast.LENGTH_SHORT).show();
+        //DBHandler db = new DBHandler(this);
+        //List<SubAmountModel> list = db.getAllSubAmounts();
+        //Toast.makeText(getApplicationContext(),"Show button clicked", Toast.LENGTH_SHORT).show();
     }
 
     /**

@@ -97,15 +97,16 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){ // When "Add" button is pressed
-                int result = data.getIntExtra("amountToAdd",-1); // -1 is a default value. Propobly will never be used.
-                String event = data.getStringExtra("eventToAdd");
-                //Toast.makeText(getApplicationContext(),"Success. Amount is: " + result, Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getApplicationContext(),"Success. Event is: " + event, Toast.LENGTH_SHORT).show();
+                SubAmountModel subAmountToAdd = new SubAmountModel();
+                subAmountToAdd.setAmount(data.getIntExtra("amountToAdd",-1)); // -1 is a default value. Propobly will never be used.
+                subAmountToAdd.setEvent(data.getStringExtra("eventToAdd"));
+                subAmountToAdd.setRefID(data.getStringExtra("toCategory"));
 
                 // TODO : insert the result from AAC into the database.
+                dbHandler.addSubAmount(subAmountToAdd);
             }
             if (resultCode == Activity.RESULT_CANCELED) { // When the 'back' button is pressed
-                //Write code if there's no result
+                // This is what happens when there is no reult.
                 Toast.makeText(getApplicationContext(),"No data collected...", Toast.LENGTH_SHORT).show();
             }
         }
