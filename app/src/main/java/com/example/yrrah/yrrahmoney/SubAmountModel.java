@@ -5,7 +5,7 @@ package com.example.yrrah.yrrahmoney;
  */
 
 public class SubAmountModel {
-    int subAmountId;
+    int subAmountId; // Barely used because DB handles it itself by auto-increment
     int amount;
     String event;
     String refID; // Reference to Category
