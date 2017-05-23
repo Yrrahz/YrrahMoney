@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> dev7
 Project: YrrahMoney
 	Branches: 	
 	✔		dev4 - First Design branch
@@ -27,6 +23,10 @@ Project: YrrahMoney
 
 			dev8:
 				SubAmount behöver inte längre subAmountId. I alla fall så behöver den inte anges i konstruktorn, pga Auto-increment i databasen.
+
+			dev9:
+				Fixa en uppdateringsmetod som uppdaterar totalAmount i alla ListViewn. Alltså det visuella och inte databasen.
+				Just nu visar också totalAmount i AAC den totalAmount som står i Databasen. Den behöver uppdateras och då kanske AAC automagiskt fixas.
 
 			devA:
 				visa statistics i AAC och även i ListView.
