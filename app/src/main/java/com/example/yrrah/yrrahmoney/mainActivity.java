@@ -6,17 +6,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
 public class mainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //runUpdateCheck();
     }
 
     public void categoryButtonPressed(View view){
-        Intent intent = new Intent(this, Dev4Activity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, Dev4Activity.class);
+        //startActivity(intent);
+        DBHandler dbHandler = new DBHandler(this);
+        List<MonthModel> list = dbHandler.getAllMonths();
+
+        Toast.makeText(getApplicationContext(),"Database value returned!", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -49,6 +60,13 @@ public class mainActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
     }
 
+    private void runUpdateCheck(){
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
+        String month_name = month_date.format(cal.getTime()); // month name as 01,02,03...10,11,12.
+
+        Toast.makeText(getApplicationContext(),"Month_name: "+month_name, Toast.LENGTH_SHORT).show();
+    }
 }
 
 

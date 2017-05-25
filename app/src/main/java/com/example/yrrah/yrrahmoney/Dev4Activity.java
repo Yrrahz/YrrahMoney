@@ -39,15 +39,18 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         calculateTotalAmount();
     }
 
+    /**
+     * Add a new category logic.
+     *
+     * @param view -
+     */
     public void onAddButtonClick(View view){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add new Category:");
 
-// Set up the input
         final EditText input = new EditText(this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setInputType(InputType.TYPE_CLASS_TEXT); // input type, such as normal text or pw...
         builder.setView(input);
 
 // Set up the buttons
@@ -65,19 +68,6 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         builder.show();
-
-        //int test = dbHandler.updateCategory(new CategoryModel("Transport",0)); // Test Catategory Update method
-        //dbHandler.deleteCategory(new CategoryModel("Rent",0)); // Test Category Delete method
-
-        //Toast.makeText(getApplicationContext(),"Database Table Count: "+dbHandler.getCategoriesCount(), Toast.LENGTH_SHORT).show(); // Count Categories
-        //Toast.makeText(getApplicationContext(),"Database Table Update: "+test, Toast.LENGTH_SHORT).show(); // Just checking the int response from update method
-
-        //List<SubAmountModel> subAmountModelList = new ArrayList<>();
-        //List<SubAmountModel> subAmountModelList2 = new ArrayList<>();
-        //subAmountModelList = dbHandler.getAllSubAmounts();
-        //subAmountModelList2 = dbHandler.getAllSubToCategory("Entertainment"); // All works!
-
-        //Toast.makeText(getApplicationContext(),"Check Data", Toast.LENGTH_SHORT).show();
     }
 
     /*** START

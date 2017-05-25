@@ -22,6 +22,7 @@ public class DBHandler extends SQLiteOpenHelper{
     // table names
     private static final String TABLE_CATEGORY = "category";
     private static final String TABLE_SUBAMOUNT = "subamount"; //weak
+    private static final String TABLE_MONTHSTAT = "monthstat";
     // Category Table Column names
     private static final String KEY_NAME = "name"; //key
     private static final String COL_TOTAL_AMOUNT = "totalamount";
@@ -30,6 +31,11 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COL_AMOUNT = "amount";
     private static final String COL_EVENT = "event";
     private static final String COL_REFID = "refid";
+    // Monthstat Table Column names
+    private static final String KEY_MONTH_ID = "monthId";
+    private static final String COL_MONTH = "monthName";
+    //private static final String COL_TOTAL = "totalamount";
+    private static final String COL_INFO = "monthInfo";
 
 
     public DBHandler(Context context){
@@ -265,6 +271,84 @@ public class DBHandler extends SQLiteOpenHelper{
 
     //</editor-fold>
 
+    //<editor-fold desc="Month methods">
+    // Adding new Month
+    public void addMonth(MonthModel monthModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //values.put(KEY_ID, sam.getSubAmountId());
+        values.put(COL_MONTH, monthModel.getMonth());
+        values.put(COL_TOTAL_AMOUNT, monthModel.getTotalAmount());
+        values.put(COL_INFO, monthModel.getText());
+        // Inserting Row
+        db.insert(TABLE_MONTHSTAT, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public MonthModel getMonthModel(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT + " WHERE "
+                + KEY_MONTH_ID + " = " + id;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        MonthModel month = new MonthModel();
+        if (c != null) {
+            c.moveToFirst();
+
+            //month.setSubAmountId(c.getInt(c.getColumnIndex(KEY_ID)));
+            month.setMonth(c.getInt(c.getColumnIndex(COL_MONTH)));
+            month.setTotalAmount(c.getInt(c.getColumnIndex(COL_TOTAL_AMOUNT)));
+            month.setText(c.getString(c.getColumnIndex(COL_INFO)));
+            c.close();
+        }
+        // Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
+        return month;
+    }
+
+    public List<MonthModel> getAllMonths() {
+        List<MonthModel> monthList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_MONTHSTAT;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                MonthModel month = new MonthModel();
+                //monthModel.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                month.setMonth(c.getInt(c.getColumnIndex(COL_MONTH)));
+                month.setTotalAmount(c.getInt(c.getColumnIndex(COL_TOTAL_AMOUNT)));
+                month.setText(c.getString(c.getColumnIndex(COL_INFO)));
+
+                monthList.add(month);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        // Kenny recommended this
+        if(db.isOpen()){
+            db.close();
+        }
+        return monthList;
+    }
+
+    public void deleteMonth(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_MONTHSTAT, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) });
+        if(db.isOpen()){
+            db.close();
+        }
+    }
+
+    //</editor-fold>
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
@@ -276,8 +360,13 @@ public class DBHandler extends SQLiteOpenHelper{
                 + "CONSTRAINT fk FOREIGN KEY(" + COL_REFID
                 + ") REFERENCES "+ TABLE_CATEGORY + "(" + KEY_NAME + "))";
 
+        String CREATE_MONTHSTAT_TABLE = "CREATE TABLE " + TABLE_MONTHSTAT + "("
+                + KEY_MONTH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_MONTH
+                + " CHAR(2)," + COL_TOTAL_AMOUNT + " INTEGER," + COL_INFO + " TEXT)";
+
         db.execSQL(CREATE_CATEGORY_TABLE);
         db.execSQL(CREATE_SUBAMOUNT_TABLE);
+        db.execSQL(CREATE_MONTHSTAT_TABLE);
     }
 
     @Override
@@ -285,6 +374,7 @@ public class DBHandler extends SQLiteOpenHelper{
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBAMOUNT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MONTHSTAT);
         // Creating tables again
         onCreate(db);
     }
@@ -337,5 +427,19 @@ public class DBHandler extends SQLiteOpenHelper{
         addSubAmount(sam);
         sam = new SubAmountModel(19,250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
+
+        // Month
+        MonthModel month = new MonthModel(10,500,"Some Text");
+        addMonth(month);
+        month = new MonthModel(11,500,"Some Text1");
+        addMonth(month);
+        month = new MonthModel(12,500,"Some Text2");
+        addMonth(month);
+        month = new MonthModel(13,500,"Some Text3");
+        addMonth(month);
+        month = new MonthModel(14,500,"Some Text4");
+        addMonth(month);
+        month = new MonthModel(15,500,"Some Text5");
+        addMonth(month);
     }
 }
