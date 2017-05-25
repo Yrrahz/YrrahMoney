@@ -25,32 +25,15 @@ public class mainActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, Dev4Activity.class);
         //startActivity(intent);
         DBHandler dbHandler = new DBHandler(this);
-        List<MonthModel> list = dbHandler.getAllMonths();
+        dbHandler.deleteMonth(2);
 
         Toast.makeText(getApplicationContext(),"Database value returned!", Toast.LENGTH_SHORT).show();
     }
-
-
     /**
-     * TestDB lyckades! Vi kan skapa och hämta data ur databasen.
-     * Appen crashar om man försöker hämta data från en category som
-     * inte finns.
-     */
-    /*
-    public void testDB(View view){
-
-        DBHandler dbHandler = new DBHandler(this);
-
-        for(int i=0 ; i<20 ; i++){
-            CategoryModel cm = new CategoryModel("Transport"+i, 1337+i);
-            dbHandler.addCategory(cm);
-        }
-
-
-        int test = dbHandler.getCategoryModel("Transport3").getTotalAmount();
-
-        Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
-    } */
+     ** TestDB lyckades! Vi kan skapa och hämta data ur databasen.
+     ** Appen crashar om man försöker hämta data från en category som
+     ** inte finns.
+     **/
 
     public void testDB2(View view){
         DBHandler dbHandler = new DBHandler(this);
@@ -60,6 +43,7 @@ public class mainActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(),"Database value returned: "+test, Toast.LENGTH_SHORT).show();
     }
 
+    // TODO : When month is implemented, delete entire Category table. Save one month and generate the month index with a method similair to this.
     private void runUpdateCheck(){
         Calendar cal=Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
@@ -68,32 +52,3 @@ public class mainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Month_name: "+month_name, Toast.LENGTH_SHORT).show();
     }
 }
-
-
-
-
-
-
-
-// ===================== OLD CODE ============================
-//addAndConfigure(choice);
-    /*
-    /**
-     * addAndConfigure - Denna metod kan vara som startNewActivity.
-     * I alla fall i dagsläget.
-     *
-     * int choice - Vilken knapp som trycktes, uppifrån och ner, 1-N
-     *
-    private void addAndConfigure(int choice){
-        Intent intent = new Intent(this, development2Activity.class);
-        intent.putExtra("choice", choice);
-        startActivity(intent);
-    }*/
-
-    /*
-    private void addAndConfigure(int choice){
-        Intent intent = new Intent(this, addAndConfigureActivity.class);
-        intent.putExtra("choice", choice);
-        startActivity(intent);
-    }
-     */

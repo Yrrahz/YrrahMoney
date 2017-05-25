@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class is handling all traffic to and from the Database.
+ *
  * Created by Yrrah on 2017-05-05.
  */
 
@@ -340,7 +342,7 @@ public class DBHandler extends SQLiteOpenHelper{
 
     public void deleteMonth(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_MONTHSTAT, KEY_ID + " = ?",
+        db.delete(TABLE_MONTHSTAT, KEY_MONTH_ID + " = ?",
                 new String[] { String.valueOf(id) });
         if(db.isOpen()){
             db.close();

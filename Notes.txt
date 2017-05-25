@@ -23,6 +23,7 @@ Project: YrrahMoney
 
 			dev8:
 				SubAmount behöver inte längre subAmountId. I alla fall så behöver den inte anges i konstruktorn, pga Auto-increment i databasen.
+				Namechanges har inte gjorts. Datetime är inte gjort, men månader har implementerats.
 
 			dev9:
 				Fixa en uppdateringsmetod som uppdaterar totalAmount i alla ListViewn. Alltså det visuella och inte databasen.
