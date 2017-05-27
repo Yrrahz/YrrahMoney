@@ -3,11 +3,15 @@ package com.example.yrrah.yrrahmoney;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class is handling all traffic to and from the Database.
@@ -340,6 +344,22 @@ public class DBHandler extends SQLiteOpenHelper{
         return monthList;
     }
 
+    public int returnLatestMonth(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_MONTHSTAT + " WHERE " + KEY_MONTH_ID + " = (SELECT MAX(" + KEY_MONTH_ID +") FROM " + TABLE_MONTHSTAT + ")";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null){
+            c.moveToFirst();
+
+            int monthLastInserted = c.getInt(c.getColumnIndex(COL_MONTH));
+            c.close();
+            return monthLastInserted;
+        }
+        return -1;
+    }
+
     public void deleteMonth(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_MONTHSTAT, KEY_MONTH_ID + " = ?",
@@ -369,6 +389,8 @@ public class DBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_CATEGORY_TABLE);
         db.execSQL(CREATE_SUBAMOUNT_TABLE);
         db.execSQL(CREATE_MONTHSTAT_TABLE);
+
+        setFirstMonth(db); // This might be a very costly "check" if there is data in TABLE_MONTHSTAT
     }
 
     @Override
@@ -381,7 +403,30 @@ public class DBHandler extends SQLiteOpenHelper{
         onCreate(db);
     }
 
+    private void setFirstMonth(SQLiteDatabase db){
+        String count = "SELECT COUNT(*) FROM " + TABLE_MONTHSTAT;
+        Cursor cursor = db.rawQuery(count, null);
+        cursor.moveToFirst();
 
+        if(!(cursor.getInt(0) > 0)) {
+            Calendar cal=Calendar.getInstance();
+            SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
+
+            MonthModel month = new MonthModel(Integer.parseInt(month_date.format(cal.getTime())),0,"indexMonth");
+            addMonth(month,db);
+        }
+        cursor.close();
+    }
+
+    private void addMonth(MonthModel monthModel, SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        values.put(COL_MONTH, monthModel.getMonth());
+        values.put(COL_TOTAL_AMOUNT, monthModel.getTotalAmount());
+        values.put(COL_INFO, monthModel.getText());
+        // Inserting Row
+        db.insert(TABLE_MONTHSTAT, null, values);
+    }
 
     public void populateDatabaseWithData(){
         // Category

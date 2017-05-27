@@ -1,0 +1,16 @@
+To select the most recent inserted row in a table:
+
+	SELECT * 
+	FROM    TABLE
+	WHERE   ID = (SELECT MAX(ID)  FROM TABLE);
+
+	
+To get a count of all months in database: (Maybe dont need this)
+
+    // TODO : Check if I need this
+    public long getMonthCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long cnt  = DatabaseUtils.queryNumEntries(db, TABLE_MONTHSTAT);
+        db.close();
+        return cnt;
+    }

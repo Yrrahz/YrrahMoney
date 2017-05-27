@@ -18,7 +18,7 @@ public class mainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //runUpdateCheck();
+        runUpdateCheck();
     }
 
     public void categoryButtonPressed(View view){
@@ -45,10 +45,13 @@ public class mainActivity extends AppCompatActivity {
 
     // TODO : When month is implemented, delete entire Category table. Save one month and generate the month index with a method similair to this.
     private void runUpdateCheck(){
+        DBHandler dbHandler = new DBHandler(this);
         Calendar cal=Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
-        String month_name = month_date.format(cal.getTime()); // month name as 01,02,03...10,11,12.
+        int month_name = Integer.parseInt(month_date.format(cal.getTime())); // month name as 1,2,3...10,11,12.
 
-        Toast.makeText(getApplicationContext(),"Month_name: "+month_name, Toast.LENGTH_SHORT).show();
+        int latestMonth = dbHandler.returnLatestMonth();
+
+        Toast.makeText(getApplicationContext(),"CurrentMonth: "+month_name+" - LatestMonth: "+ latestMonth, Toast.LENGTH_SHORT).show();
     }
 }
