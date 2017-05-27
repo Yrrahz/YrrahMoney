@@ -60,7 +60,7 @@ public class DBHandler extends SQLiteOpenHelper{
         db.close(); // Closing database connection
     }
 
-    // Getting one Category TODO: Restructure this, like SAM
+    // Getting one Category TODO: Restructure this, like SAM, IF I need it...
     public CategoryModel getCategoryModel(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CATEGORY, new String[] { KEY_NAME, COL_TOTAL_AMOUNT },
@@ -139,12 +139,49 @@ public class DBHandler extends SQLiteOpenHelper{
         return returnValue;
     }
 
-    // Deleting a shop
+    // Deleting a Category
     public void deleteCategory(CategoryModel cm) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_CATEGORY, KEY_NAME + " = ?",
                 new String[] { String.valueOf(cm.getName()) });
         db.close();
+    }
+
+    public int totalAmount(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String countQuery = "SELECT SUM("+COL_TOTAL_AMOUNT+") AS 'sum' FROM "+TABLE_CATEGORY;
+        Cursor c = db.rawQuery(countQuery, null);
+
+        if(c != null){
+            c.moveToFirst();
+            int totalAmount = c.getInt(c.getColumnIndex("sum"));
+            c.close();
+            db.close();
+            return totalAmount;
+        }
+
+        if(db.isOpen()){
+            db.close();
+        }
+        return -1;
+    }
+
+    public void deleteAllCategoryData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBAMOUNT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
+
+        String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
+                + KEY_NAME + " VARCHAR(50) PRIMARY KEY," + COL_TOTAL_AMOUNT + " INTEGER)";
+
+        String CREATE_SUBAMOUNT_TABLE = "CREATE TABLE " + TABLE_SUBAMOUNT + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_AMOUNT + " INTEGER,"
+                + COL_EVENT + " VARCHAR(50)," + COL_REFID + " VARCHAR(50),"
+                + "CONSTRAINT fk FOREIGN KEY(" + COL_REFID
+                + ") REFERENCES "+ TABLE_CATEGORY + "(" + KEY_NAME + "))";
+
+        db.execSQL(CREATE_CATEGORY_TABLE);
+        db.execSQL(CREATE_SUBAMOUNT_TABLE);
     }
     //</editor-fold>
 
@@ -396,8 +433,8 @@ public class DBHandler extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBAMOUNT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MONTHSTAT);
         // Creating tables again
         onCreate(db);

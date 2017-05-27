@@ -92,7 +92,6 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
                 subAmountToAdd.setEvent(data.getStringExtra("eventToAdd"));
                 subAmountToAdd.setRefID(data.getStringExtra("toCategory"));
 
-                // TODO : insert the result from AAC into the database.
                 dbHandler.addSubAmount(subAmountToAdd);
             }
             if (resultCode == Activity.RESULT_CANCELED) { // When the 'back' button is pressed
@@ -127,10 +126,8 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void calculateTotalAmount(){
-        Integer totalAmount = 0;
-        for(CategoryModel cm: listOfCategories){
-            totalAmount = totalAmount + cm.getTotalAmount();
-        }
+        Integer totalAmount = dbHandler.totalAmount();
+
         TextView totalAmountPresent = (TextView) findViewById(R.id.amountResult);
         totalAmountPresent.setText(String.format("%s",totalAmount.toString()));
     }

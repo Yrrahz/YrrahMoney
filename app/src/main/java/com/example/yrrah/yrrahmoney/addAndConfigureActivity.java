@@ -100,6 +100,7 @@ public class addAndConfigureActivity extends AppCompatActivity {
      * This button should display a list of all events and their amount.
      * @param view -
      */
+    // TODO : Finish this.
     public void onShowButtonClicked(View view){
         //Toast.makeText(getApplicationContext(),"Show button clicked", Toast.LENGTH_SHORT).show();
         //DBHandler db = new DBHandler(this);

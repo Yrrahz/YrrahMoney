@@ -1,6 +1,8 @@
 package com.example.yrrah.yrrahmoney;
 
 /**
+ *  This is a model of one table in the database. This model is used to properly implement
+ *  data into the database using MVC.
  * Created by Yrrah on 2017-05-05.
  */
 

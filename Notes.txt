@@ -1,5 +1,5 @@
 Project: YrrahMoney
-	Branches: 	
+	Branches:
 	✔		dev4 - First Design branch
 	✔		dev5 - Develop a Database
 	✔		dev6 - Extend Database with SubAmount and negative amount
@@ -8,13 +8,16 @@ Project: YrrahMoney
 			dev9 - Develop MainActivity, THE update functionality
 			devA - Visual presentation, diagrams, icons, pictures
 			devB - Compare months, more statistics
-			---- 
+			----
 			ext1 - ExpListView instead of ListView
 			ext2 - test-classes
-			ext3 - Sharing statistics to GDrive, or similair
+			ext3 - Sharing statistics to GoogleDrive, or similair
 			ext4 - Android Wear functions
 			ext5 - Proper structure within the project
 			ext6 - Kunna skriva kommentarer på events
+			ext7 - Spara kategorier i veckor eller år utöver månader.
+			ext8 - Spara months som ett set i databasen.
+			ext9 - Spara subAmounts events i ett nytt table.
 
 	Details:
 			dev7:
@@ -37,6 +40,13 @@ Project: YrrahMoney
 
 			ext5:
 				Strukturera upp i olika paket.
+
+			ext8:
+				Just nu raderas alla categories och subAmounts vid sparandet av months. Gör om så att months sparas med en weak subAmounts liknande med alla subAmounts.
+
+			ext9:
+				Spara subAmounts events i ett nytt table, så att man slipper spara om dom minst en gång i månaden.
+				Kanske också kan då selecta subAmounts events som en View, länkandes till detta table. Behöver nog omstruktorera en del
 
 Other ideas:
 			Mirrored Painting Application

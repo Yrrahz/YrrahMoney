@@ -14,3 +14,25 @@ To get a count of all months in database: (Maybe dont need this)
         db.close();
         return cnt;
     }
+
+
+
+
+If you just want a "debug-style" dump of an array:
+
+String str = Arrays.toString(arr);
+or, for more control (before Java 8):
+
+StringBuilder builder = new StringBuilder();
+for(String s : arr) {
+    builder.append(s);
+}
+String str = builder.toString();
+(Java 8 and above):
+
+String str = String.join(",", arr);
+You can modify the above depending on what characters, if any, you want in between strings.
+
+You may see near identical code to the pre-Java 8 code but using StringBuffer - StringBuilder is a newer class that's not thread-safe, but therefore has better performance in a single thread because it does away with unneeded synchronization. In short, you're better using StringBuilder in 99% of cases - functionality wise, the two are identical.
+
+DON'T use a string and just append to it with += like some of the answers show here. This sends the GC through the roof because you're creating and throwing away as many string objects as you have items in your array. For small arrays you might not really notice the difference, but for large ones it can be orders of magnitude slower.
