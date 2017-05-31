@@ -117,7 +117,7 @@ public class addAndConfigureActivity extends AppCompatActivity {
         // Set global variables given from previous activity.
         Intent intent = getIntent();
         categoryTitle = intent.getExtras().getString("categoryTitle");
-        subAmountModelList = db.getAllSubToCategory(categoryTitle);
+        subAmountModelList = db.getAllSubToCategory(categoryTitle); // TODO : Add logic if this is empty
         // Find Label
         TextView textLabel = (TextView) findViewById(R.id.addAndConfigureTextView);
         String label = categoryTitle;

@@ -16,6 +16,12 @@ To get a count of all months in database: (Maybe dont need this)
     }
 
 
+	db.execSQL("CREATE TRIGGER dept_id_trigger22" + 
+                " AFTER INSERT "+ 
+                "ON Employees"+ 
+                " BEGIN"+ 
+                                     //Condition 
+                " SELECT RAISE(ABORT,'error'); END;"); 
 
 
 If you just want a "debug-style" dump of an array:
@@ -36,3 +42,201 @@ You can modify the above depending on what characters, if any, you want in betwe
 You may see near identical code to the pre-Java 8 code but using StringBuffer - StringBuilder is a newer class that's not thread-safe, but therefore has better performance in a single thread because it does away with unneeded synchronization. In short, you're better using StringBuilder in 99% of cases - functionality wise, the two are identical.
 
 DON'T use a string and just append to it with += like some of the answers show here. This sends the GC through the roof because you're creating and throwing away as many string objects as you have items in your array. For small arrays you might not really notice the difference, but for large ones it can be orders of magnitude slower.
+
+
+CREATE TABLE category(name VARCHAR(50) PRIMARY KEY,totalamount INTEGER);
+CREATE TABLE subamount(subAmountId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,amount INTEGER,event VARCHAR(50),refid VARCHAR(50),CONSTRAINT fk FOREIGN KEY(refid) REFERENCES category(name));
+CREATE TABLE monthstat(monthId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,monthName CHAR(2),totalamount INTEGER,monthInfo TEXT)
+CREATE TRIGGER updateTotalAmountTrigger AFTER INSERT ON subamount BEGIN UPDATE category SET totalamount = (SELECT SUM(totalamount) WHERE category.name = NEW.refid) + NEW.amount WHERE name = NEW.refid;END;
+
+CREATE TRIGGER updateTotalAmountTrigger AFTER INSERT ON subamount BEGIN UPDATE category SET totalamount = (SELECT SUM(totalamount) FROM category WHERE name = NEW.refid) + NEW.amount WHERE name = NEW.refid;END;
+CREATE TRIGGER updateTotalAmountTrigger AFTER INSERT ON subamount BEGIN UPDATE category SET totalamount = (SELECT SUM(totalamount) FROM category WHERE name = NEW.refid) + NEW.amount WHERE name = NEW.refid;END;
+
+CREATE TRIGGER updateTotalAmountTrigger AFTER INSERT ON subamount DECLARE test INT; BEGIN UPDATE category SET totalamount = SUM(totalamount) + NEW.amount WHERE name = NEW.refid;END;
+
+INSERT INTO category VALUES('Transport',0)
+INSERT INTO category VALUES('Food',0)
+INSERT INTO subamount VALUES(100,1500,'someEvent','Transport');
+INSERT INTO subamount VALUES(1001,100,'someEvent','Food');
+INSERT INTO subamount VALUES(1002,200,'someEvent','Food');
+INSERT INTO subamount VALUES(1003,2500,'someEvent','Transport');
+
+
+
+
+"CREATE TRIGGER " + TRIGGER_UPDATE_AMOUNT + " AFTER INSERT ON " + TABLE_SUBAMOUNT + " BEGIN UPDATE " + TABLE_CATEGORY + " SET " + COL_TOTAL_AMOUNT + " = (SELECT SUM("+COL_TOTAL_AMOUNT+") FROM " + TABLE_CATEGORY + " WHERE " + KEY_NAME + " = NEW."+COL_REFID+") + NEW."+COL_AMOUNT+" WHERE "+KEY_NAME+" = NEW."+COL_REFID+";END;"
+
+
+
+
+
+CREATE OR REPLACE TRIGGER updateTotalAmountTrigger AFTER INSERT ON Customers BEGIN 
+UPDATE Customers SET City = 'greatSuccess' WHERE CustomerID = NEW.CustomerID - 1;
+END;
+
+INSERT INTO Customers VALUES(92,'testName','testContact','testAddress','testCity','testPostal','testCountry');
+INSERT INTO Customers VALUES(93,'testName2','testContact2','testAddress2','testCity2','testPostal2','testCountry2');
+
+CREATE OR REPLACE TRIGGER CourseRegistration
+INSTEAD OF INSERT ON Registrations
+REFERENCING NEW AS new
+FOR EACH ROW
+DECLARE
+
+invRequest EXCEPTION;
+
+invalidCheck INT;
+checkPassed INT;
+checkQueue INT;
+checkRegistered INT;
+checkPrereq INT;
+checkLimited INT;
+
+maxAllowed INT;
+curNrOfStudents INT;
+curLastInQ INT;
+
+BEGIN
+	SELECT COUNT (*) INTO checkPassed 
+	FROM PassedCourses 
+	WHERE PassedCourses.id = :new.id AND 
+		  PassedCourses.code = :new.code; 
+
+	SELECT COUNT (*) INTO checkQueue 
+	FROM CourseQueuePosition 
+	WHERE CourseQueuePosition.id = :new.id AND 
+		  CourseQueuePosition.code = :new.code; 
+
+	SELECT COUNT (*) INTO checkRegistered 
+	FROM RegisteredTo 
+	WHERE RegisteredTo.id = :new.id AND 
+		  RegisteredTo.code = :new.code;
+
+	-- Checks if the student has any prerequisite courses left for the course
+	-- (s)he's trying to register on
+	SELECT COUNT (*) INTO checkPrereq FROM(
+		(SELECT reqcode
+		FROM Prerequisite
+		WHERE Prerequisite.curcode = :new.code)
+		MINUS
+		(SELECT PR.reqcode
+		FROM Prerequisite PR, PassedCourses PC 
+		WHERE PR.reqcode = PC.code AND
+			  PC.id = :new.id AND
+			  PR.curcode = :new.code));
+
+	invalidCheck := checkPassed + checkQueue + checkRegistered + checkPrereq;
+
+	IF (invalidCheck > 0) THEN
+		RAISE invRequest;
+
+	ELSE -- Checks if the course is full or not
+		SELECT COUNT (maxNrOfStudents) INTO checkLimited 
+		FROM RestrictedCourse 
+		WHERE RestrictedCourse.code = :new.code;
+		IF (checkLimited > 0) THEN -- Checks if the course is restricted 
+			SELECT maxNrOfStudents INTO maxAllowed
+			FROM RestrictedCourse
+			WHERE RestrictedCourse.code = :new.code;
+
+			-- Counts the current nr of students that are registered to the course
+			SELECT COUNT (id) INTO curNrOfStudents 
+			FROM RegisteredTo
+			WHERE RegisteredTo.code = :new.code;
+
+			IF (curNrOfStudents < maxAllowed) THEN -- Checks wether the course is full or not
+				INSERT INTO RegisteredTo
+				VALUES(:new.code, :new.id);
+
+			ELSE -- The course is full so save the number of the person currently last in the queue
+				 -- and put the student behind that person 
+				SELECT MAX(queueNr) INTO curLastInQ 
+				FROM CourseQueuePosition 
+				WHERE CourseQueuePosition.code = :new.code;
+
+				IF (curLastInQ > 0) THEN -- Checks if there is a queue
+					INSERT INTO CourseQueuePosition 
+					VALUES(:new.code, :new.id, curLastInQ+1);
+				ELSE -- The queue was empty (curLastInQ is null) - put the student first in queue
+					INSERT INTO CourseQueuePosition
+					VALUES(:new.code, :new.id, 1);
+				END IF;
+
+			END IF;
+
+		ELSE -- There is no limit on the course - register the student immediately 
+			INSERT INTO RegisteredTo
+					VALUES(:new.code, :new.id);
+		END IF;
+
+	END IF;
+
+	EXCEPTION
+		WHEN invRequest THEN
+			RAISE_APPLICATION_ERROR(-20000, 'The registration failed.');
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER CourseUnregistration
+INSTEAD OF DELETE ON Registrations
+REFERENCING OLD AS old
+FOR EACH ROW
+DECLARE
+fiq VARCHAR(50);
+StudentsInQueue INT;
+IsInQueue INT;
+PosInQueue INT;
+queueX INT;
+curNrOfStudents INT;
+maxAllowed INT;
+
+BEGIN
+	DELETE FROM RegisteredTo 
+		WHERE RegisteredTo.code = :old.code AND RegisteredTo.id = :old.id;
+
+	-- Checks if there is any student in queue for that course
+	SELECT COUNT(*) INTO StudentsInQueue
+	FROM Queue
+	WHERE Queue.code = :old.code;
+
+	IF (StudentsInQueue > 0) THEN -- If the course has a queue, it will exist in RestrictedCourse
+		SELECT Queue.id INTO fiq 
+			FROM Queue
+			WHERE Queue.code = :old.code AND Queue.queueNr = 1; 
+
+		SELECT COUNT(*) INTO IsInQueue -- Checks if the specific student is in the queue 
+			FROM Queue 
+			WHERE Queue.code = :old.code AND Queue.id = :old.id; -- if (s)he is than IsInQueue = 1, 0 if not
+		
+		IF (IsInQueue > 0) THEN -- If the unregistered student was in a waiting queue
+			SELECT queueNr INTO PosInQueue
+			FROM Queue
+			WHERE Queue.code = :old.code AND Queue.id = :old.id;
+
+			DELETE FROM Queue
+				WHERE Queue.code = :old.code AND Queue.id = :old.id;
+			UPDATE Queue
+				SET queueNr = queueNr - 1
+				WHERE code = :old.code AND queueNr > PosInQueue;
+
+		ELSE -- If the student was unregistered from the course this checks whether or not the course was over-full before
+			SELECT maxNrOfStudents INTO maxAllowed -- if the unregistered student was registered and not in queue
+				FROM RestrictedCourse
+				WHERE RestrictedCourse.code = :old.code; 
+			SELECT COUNT (id) INTO curNrOfStudents 
+				FROM RegisteredTo
+				WHERE RegisteredTo.code = :old.code;
+			IF (curNrOfStudents < maxAllowed) THEN -- Checks whether the course is full or not
+				DELETE FROM Queue
+					WHERE code = :old.code AND id = fiq;
+
+				INSERT INTO Registrations VALUES(fiq, :old.code, NULL);
+
+				UPDATE Queue
+					SET queueNr = queueNr - 1
+					WHERE code = :old.code;			
+			END IF; 
+		END IF;
+	END IF;
+END;

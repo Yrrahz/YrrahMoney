@@ -70,9 +70,6 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         builder.show();
     }
 
-    /*** START
-     * dev7 development - More design to AAC and dev4Activity
-     ***/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -100,9 +97,6 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
     }
-    /*** END
-     * dev7 development - More design to AAC and dev4Activity
-     ***/
 
     private void populateListView(){
 
@@ -137,6 +131,7 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
      * the input and removes excess whitespaces. Then checks if the Category already exists in the
      * database. If ut does, a toast saying it does will appear, if not, create a new Category into
      * the database with totalValue of 0.
+     *
      * @param newCategory - The input from the user to what the new Category name should be
      */
     private void insertNewCategory(String newCategory){

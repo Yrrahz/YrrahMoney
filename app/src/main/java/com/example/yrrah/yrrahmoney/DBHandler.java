@@ -42,6 +42,8 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COL_MONTH = "monthName";
     //private static final String COL_TOTAL = "totalamount";
     private static final String COL_INFO = "monthInfo";
+    // Trigger
+    private static final String TRIGGER_UPDATE_AMOUNT = "updateTotalAmountTrigger";
 
 
     public DBHandler(Context context){
@@ -283,7 +285,6 @@ public class DBHandler extends SQLiteOpenHelper{
         return subAmountList;
     }
 
-    // TODO: Check if I need this.
     // TODO: Test this!
     public int updateSubAmount(SubAmountModel sam) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -410,6 +411,7 @@ public class DBHandler extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // TODO : Save these strings somewhere else, they are also used in deleteAllCategoryData
         String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
                 + KEY_NAME + " VARCHAR(50) PRIMARY KEY," + COL_TOTAL_AMOUNT + " INTEGER)";
 
@@ -423,9 +425,15 @@ public class DBHandler extends SQLiteOpenHelper{
                 + KEY_MONTH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_MONTH
                 + " CHAR(2)," + COL_TOTAL_AMOUNT + " INTEGER," + COL_INFO + " TEXT)";
 
+        String CREATE_TRIGGER = "CREATE TRIGGER " + TRIGGER_UPDATE_AMOUNT + " AFTER INSERT ON "
+                + TABLE_SUBAMOUNT + " BEGIN UPDATE " + TABLE_CATEGORY + " SET " + COL_TOTAL_AMOUNT
+                + " = (SELECT SUM(" + COL_TOTAL_AMOUNT + ") FROM " + TABLE_CATEGORY + " WHERE " + KEY_NAME
+                + " = NEW."+COL_REFID+") + NEW."+COL_AMOUNT+" WHERE " + KEY_NAME + " = NEW."+COL_REFID+";END;";
+
         db.execSQL(CREATE_CATEGORY_TABLE);
         db.execSQL(CREATE_SUBAMOUNT_TABLE);
         db.execSQL(CREATE_MONTHSTAT_TABLE);
+        db.execSQL(CREATE_TRIGGER);
 
         setFirstMonth(db); // This might be a very costly "check" if there is data in TABLE_MONTHSTAT
     }
@@ -433,6 +441,7 @@ public class DBHandler extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
+        db.execSQL("DROP TRIGGER IF EXISTS " + TRIGGER_UPDATE_AMOUNT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBAMOUNT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MONTHSTAT);
@@ -468,32 +477,34 @@ public class DBHandler extends SQLiteOpenHelper{
     public void populateDatabaseWithData(){
         // Category
         // Expenditure
-        CategoryModel cm = new CategoryModel("Transport", 1000);
+        CategoryModel cm = new CategoryModel("Transport", 0);
         addCategory(cm);
-        cm = new CategoryModel("Food",2000);
+        cm = new CategoryModel("Food",0);
         addCategory(cm);
-        cm = new CategoryModel("Eating Out",2000);
+        cm = new CategoryModel("Eating Out",0);
         addCategory(cm);
-        cm = new CategoryModel("Rent",4500);
+        cm = new CategoryModel("Rent",0);
         addCategory(cm);
-        cm = new CategoryModel("Hygiene",250);
+        cm = new CategoryModel("Hygiene",0);
         addCategory(cm);
-        cm = new CategoryModel("Entertainment",5412);
+        cm = new CategoryModel("Entertainment",0);
         addCategory(cm);
-        cm = new CategoryModel("Gifts",397);
+        /*
+        cm = new CategoryModel("Gifts",0);
         addCategory(cm);
-        cm = new CategoryModel("Bills",4750);
+        cm = new CategoryModel("Bills",0);
         addCategory(cm);
-        cm = new CategoryModel("Other",3713);
+        cm = new CategoryModel("Other",0);
         addCategory(cm);
         // Income
-        cm = new CategoryModel("Salary",19000);
+        cm = new CategoryModel("Salary",0);
         addCategory(cm);
-        cm = new CategoryModel("Other Income",500);
+        cm = new CategoryModel("Other Income",0);
         addCategory(cm);
+        */
 
         // SubAmount
-        SubAmountModel sam = new SubAmountModel(0,100,"Resa hem","Transport");
+        SubAmountModel sam = new SubAmountModel(100,100,"Resa hem","Transport");
         addSubAmount(sam);
         sam = new SubAmountModel(212,130,"Resa bort", "Transport");
         addSubAmount(sam);
@@ -511,8 +522,10 @@ public class DBHandler extends SQLiteOpenHelper{
         addSubAmount(sam);
         sam = new SubAmountModel(19,250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
+        // Total for Entertainment is 4000
 
         // Month
+        /*
         MonthModel month = new MonthModel(10,500,"Some Text");
         addMonth(month);
         month = new MonthModel(11,500,"Some Text1");
@@ -525,5 +538,6 @@ public class DBHandler extends SQLiteOpenHelper{
         addMonth(month);
         month = new MonthModel(15,500,"Some Text5");
         addMonth(month);
+        */
     }
 }
