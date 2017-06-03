@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static java.lang.Math.round;
 
@@ -23,15 +27,68 @@ public class mainActivity extends AppCompatActivity {
         runUpdateCheck();
     }
 
+    public void monthButtonPressed(View view){
+        // Month button pressed...
+        DBHandler dbHandler = new DBHandler(this);
+        List<MonthModel> monthList = dbHandler.getAllMonths();
+        List<Map<String, String>> data = new ArrayList<>();
+
+        for(MonthModel m : monthList){
+            Map<String, String> listViewElement = new HashMap<>(2);
+            listViewElement.put("heading", monthConverter(m.getMonth()));
+            listViewElement.put("subItem", Integer.toString(m.getTotalAmount()));
+
+            data.add(listViewElement);
+        }
+
+        SimpleAdapter adapter = new SimpleAdapter(this, data,
+                android.R.layout.simple_list_item_2, // <-- Standard lib item, contains both Item and SubItem in listView
+                new String[] {"heading","subItem"}, // <-- must be same as dateMap's keys
+                new int[] {android.R.id.text1, android.R.id.text2});
+
+        ListView monthListView = (ListView) findViewById(R.id.mainListView);
+        monthListView.setAdapter(adapter);
+    }
+
+    private String monthConverter(int monthNr){
+        switch (monthNr){
+            case 1 :
+                return "Januari";
+            case 2 :
+                return "Februari";
+            case 3 :
+                return "Mars";
+            case 4 :
+                return "April";
+            case 5 :
+                return "Maj";
+            case 6 :
+                return "Juni";
+            case 7 :
+                return "Juli";
+            case 8 :
+                return "Augusti";
+            case 9 :
+                return "September";
+            case 10 :
+                return "Oktober";
+            case 11 :
+                return "November";
+            case 12 :
+                return "December";
+            default:
+                return "custom";
+        }
+    }
+
+    public void stat2ButtonPressed(View view){
+        // stat2Button Pressed...
+    }
+
     public void categoryButtonPressed(View view){
         Intent intent = new Intent(this, Dev4Activity.class);
         startActivity(intent);
     }
-    /**
-     ** TestDB lyckades! Vi kan skapa och hämta data ur databasen.
-     ** Appen crashar om man försöker hämta data från en category som
-     ** inte finns.
-     **/
 
     public void testDB2(View view){
         DBHandler dbHandler = new DBHandler(this);
@@ -46,8 +103,7 @@ public class mainActivity extends AppCompatActivity {
         int currentMonth = Integer.parseInt(month_date.format(cal.getTime())); // month name as 1,2,3...10,11,12.
         int latestMonth = dbHandler.returnLatestMonth();
 
-        //saveMonth(latestMonth, dbHandler); // To test the months delete logic - This should not be used in final product
-
+        // TODO : Add support for new year.. 1 !> 12
         if(currentMonth > latestMonth){ // If a month has passed. Save last month, delete all categories, start over...
             saveMonth(latestMonth, dbHandler);
         }

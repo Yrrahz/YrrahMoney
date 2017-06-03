@@ -8,4 +8,6 @@
     <string name="category3text">Category3Text</string>
     <string name="category4Text">Category4Text</string>
     <string name="totalAmount">Total Amount:</string>
+    <string name="month">Month</string>
+    <string name="stat">Stats</string>
 </resources>

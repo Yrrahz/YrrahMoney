@@ -34,7 +34,6 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_dev4);
 
         dbHandler = new DBHandler(this);
-        listOfCategories = dbHandler.getAllCategories();
         populateListView();
         calculateTotalAmount();
     }
@@ -90,15 +89,19 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
                 subAmountToAdd.setRefID(data.getStringExtra("toCategory"));
 
                 dbHandler.addSubAmount(subAmountToAdd);
+                populateListView();
+                calculateTotalAmount();
             }
             if (resultCode == Activity.RESULT_CANCELED) { // When the 'back' button is pressed
                 // This is what happens when there is no reult.
-                Toast.makeText(getApplicationContext(),"No data collected...", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(),"No data collected...", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void populateListView(){
+        listOfCategories = dbHandler.getAllCategories();
+        data.clear();
 
         for(CategoryModel cm: listOfCategories){
             Map<String, String> listViewElement = new HashMap<>(2);
@@ -144,6 +147,7 @@ public class Dev4Activity extends AppCompatActivity implements AdapterView.OnIte
         if(!categoryList.contains(cm)){
             dbHandler.addCategory(cm);
             Toast.makeText(getApplicationContext(),"Category Added!", Toast.LENGTH_SHORT).show();
+            populateListView();
         }else{
             Toast.makeText(getApplicationContext(),"Category Already Exists!", Toast.LENGTH_SHORT).show();
         }

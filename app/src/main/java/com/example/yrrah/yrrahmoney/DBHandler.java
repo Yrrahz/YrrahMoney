@@ -522,22 +522,19 @@ public class DBHandler extends SQLiteOpenHelper{
         addSubAmount(sam);
         sam = new SubAmountModel(19,250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
-        // Total for Entertainment is 4000
 
         // Month
-        /*
-        MonthModel month = new MonthModel(10,500,"Some Text");
+        MonthModel month = new MonthModel(8,1500,"Text");
         addMonth(month);
-        month = new MonthModel(11,500,"Some Text1");
+        month = new MonthModel(9,1250,"Text1");
         addMonth(month);
-        month = new MonthModel(12,500,"Some Text2");
+        month = new MonthModel(10,3500,"Text2");
         addMonth(month);
-        month = new MonthModel(13,500,"Some Text3");
+        month = new MonthModel(11,10345,"Text3");
         addMonth(month);
-        month = new MonthModel(14,500,"Some Text4");
+        month = new MonthModel(12,5100,"Text4");
         addMonth(month);
-        month = new MonthModel(15,500,"Some Text5");
+        month = new MonthModel(13,5300,"Text5");
         addMonth(month);
-        */
     }
 }
