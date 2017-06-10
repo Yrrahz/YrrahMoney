@@ -333,7 +333,7 @@ public class DBHandler extends SQLiteOpenHelper{
     public MonthModel getMonthModel(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM " + TABLE_SUBAMOUNT + " WHERE "
+        String selectQuery = "SELECT * FROM " + TABLE_MONTHSTAT + " WHERE "
                 + KEY_MONTH_ID + " = " + id;
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -341,7 +341,7 @@ public class DBHandler extends SQLiteOpenHelper{
         if (c != null) {
             c.moveToFirst();
 
-            //month.setSubAmountId(c.getInt(c.getColumnIndex(KEY_ID)));
+            month.setId(c.getInt(c.getColumnIndex(KEY_MONTH_ID)));
             month.setMonth(c.getInt(c.getColumnIndex(COL_MONTH)));
             month.setTotalAmount(c.getInt(c.getColumnIndex(COL_TOTAL_AMOUNT)));
             month.setText(c.getString(c.getColumnIndex(COL_INFO)));
@@ -365,7 +365,7 @@ public class DBHandler extends SQLiteOpenHelper{
         if (c.moveToFirst()) {
             do {
                 MonthModel month = new MonthModel();
-                //monthModel.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                month.setId(c.getInt(c.getColumnIndex(KEY_MONTH_ID)));
                 month.setMonth(c.getInt(c.getColumnIndex(COL_MONTH)));
                 month.setTotalAmount(c.getInt(c.getColumnIndex(COL_TOTAL_AMOUNT)));
                 month.setText(c.getString(c.getColumnIndex(COL_INFO)));
@@ -423,7 +423,7 @@ public class DBHandler extends SQLiteOpenHelper{
 
         String CREATE_MONTHSTAT_TABLE = "CREATE TABLE " + TABLE_MONTHSTAT + "("
                 + KEY_MONTH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_MONTH
-                + " CHAR(2)," + COL_TOTAL_AMOUNT + " INTEGER," + COL_INFO + " TEXT)";
+                + " INTEGER," + COL_TOTAL_AMOUNT + " INTEGER," + COL_INFO + " TEXT)";
 
         String CREATE_TRIGGER = "CREATE TRIGGER " + TRIGGER_UPDATE_AMOUNT + " AFTER INSERT ON "
                 + TABLE_SUBAMOUNT + " BEGIN UPDATE " + TABLE_CATEGORY + " SET " + COL_TOTAL_AMOUNT
@@ -435,7 +435,7 @@ public class DBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_MONTHSTAT_TABLE);
         db.execSQL(CREATE_TRIGGER);
 
-        setFirstMonth(db); // This might be a very costly "check" if there is data in TABLE_MONTHSTAT
+        //setFirstMonth(db); // TODO : This might be a very costly "check" if there is data in TABLE_MONTHSTAT. Check if so and if needed...
     }
 
     @Override
@@ -524,17 +524,17 @@ public class DBHandler extends SQLiteOpenHelper{
         addSubAmount(sam);
 
         // Month
-        MonthModel month = new MonthModel(8,1500,"Text");
+        MonthModel month = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
         addMonth(month);
-        month = new MonthModel(9,1250,"Text1");
+        month = new MonthModel(1,1250,"Entertainment 90.7;Hygiene 0.0;Rent 0.0;Eating_Out 0.0;Food 4.08;Transport 5.22;");
         addMonth(month);
-        month = new MonthModel(10,3500,"Text2");
+        month = new MonthModel(2,3500,"Text2");
         addMonth(month);
-        month = new MonthModel(11,10345,"Text3");
+        month = new MonthModel(3,10345,"Text3");
         addMonth(month);
-        month = new MonthModel(12,5100,"Text4");
+        month = new MonthModel(4,5100,"Text4");
         addMonth(month);
-        month = new MonthModel(13,5300,"Text5");
+        month = new MonthModel(5,5300,"Text5");
         addMonth(month);
     }
 }

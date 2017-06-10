@@ -48,7 +48,7 @@ public class addAndConfigureActivity extends AppCompatActivity {
 
         if(radioButton){ // if "Add Event" is checked, chose the text from that input
             EditText editEventToAdd = (EditText) findViewById(R.id.addEvent);
-            String eventToAdd = editEventToAdd.getText().toString();
+            String eventToAdd = editEventToAdd.getText().toString().trim().replaceAll(" ","_");
             returnIntent.putExtra("amountToAdd", numberToAdd); // Return varaible numberToAdd and call it "numberToAdd"
             returnIntent.putExtra("eventToAdd", eventToAdd); // Return varaible eventToAdd and call it "eventToAdd"
         }else{ // if "choose from list" is checked, chose the event from the DropDownList

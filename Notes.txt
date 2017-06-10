@@ -5,7 +5,7 @@ Project: YrrahMoney
 	✔		dev6 - Extend Database with SubAmount and negative amount
 	✔		dev7 - More design to AAC and dev4Activity
 	✔		dev8 - Restructure Database to include months + Datetime + namechange of categories
-			dev9 - Develop MainActivity, THE update functionality
+	☼		dev9 - Develop MainActivity, THE update functionality
 			devA - Visual presentation, diagrams, icons, pictures
 			devB - Compare months, more statistics
 			----
