@@ -542,13 +542,13 @@ public class DBHandler extends SQLiteOpenHelper{
         addMonth(month);
         month = new MonthModel(1,1250,"Entertainment 90.7;Hygiene 0.0;Rent 0.0;Eating_Out 0.0;Food 4.08;Transport 5.22;");
         addMonth(month);
-        month = new MonthModel(2,3500,"Text2");
+        month = new MonthModel(2,3500,"Entertainment 50.7;Hygiene 12.0;Rent 38.0;Eating_Out 0.0;Food 4.08;Transport 5.22;");
         addMonth(month);
-        month = new MonthModel(3,10345,"Text3");
+        month = new MonthModel(3,10345,"Text3 hej");
         addMonth(month);
-        month = new MonthModel(4,5100,"Text4");
+        month = new MonthModel(4,5100,"Text4 hej;");
         addMonth(month);
-        month = new MonthModel(5,5300,"Text5");
+        month = new MonthModel(5,5300,"Text5 3;");
         addMonth(month);
     }
 }
