@@ -31,7 +31,7 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //runUpdateCheck(); // TODO : Fix this #"!#% method...!
+        runUpdateCheck(); // TODO : Fix this #"!#% method...!
     }
 
     public void monthButtonPressed(View view){
@@ -150,6 +150,29 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void runUpdateCheck(){
+
+        DBHandler dbHandler = new DBHandler(this);
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
+        int monthCount = dbHandler.returnMonthCount();
+        int currentMonth = Integer.parseInt(month_date.format(cal.getTime())); // month name as 1,2,3...10,11,12.
+
+
+        if(monthCount == -1){
+            Toast.makeText(getApplicationContext(),"Database initiation failed.", Toast.LENGTH_LONG).show();
+            return;
+        }else if(monthCount == 0){
+            saveMonth(currentMonth);
+            return;
+        }
+
+        int latestMonth = dbHandler.returnLatestMonth();
+
+        if(currentMonth > latestMonth || (latestMonth == 12 && currentMonth == 1)){ // If a month has passed. Save last month, delete all categories, start over...
+            saveMonth(latestMonth, dbHandler);
+        }
+
+        /*
         DBHandler dbHandler = new DBHandler(this);
         Calendar cal=Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
@@ -160,7 +183,14 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
         // TODO : Add support for new year.. 1 !> 12
         if(currentMonth > latestMonth){ // If a month has passed. Save last month, delete all categories, start over...
             saveMonth(latestMonth, dbHandler);
-        }
+        }*/
+    }
+
+    private void saveMonth(int currentMonth){
+        DBHandler dbHandler = new DBHandler(this);
+        MonthModel newMonth = new MonthModel();
+        newMonth.setMonth(currentMonth);
+        dbHandler.addMonth(newMonth);
     }
 
     private void saveMonth(int latestMonth, DBHandler dbHandler){

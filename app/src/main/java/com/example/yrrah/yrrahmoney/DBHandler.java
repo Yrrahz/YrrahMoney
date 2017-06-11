@@ -382,6 +382,20 @@ public class DBHandler extends SQLiteOpenHelper{
         return monthList;
     }
 
+    public int returnMonthCount(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT COUNT(*) AS nrOfMonths FROM " + TABLE_MONTHSTAT;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null){
+            c.moveToFirst();
+            int nrOfMonths = c.getInt(c.getColumnIndex("nrOfMonths"));
+            c.close();
+            return nrOfMonths;
+        }
+        return -1;
+    }
+
     public int returnLatestMonth(){
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_MONTHSTAT + " WHERE " + KEY_MONTH_ID + " = (SELECT MAX(" + KEY_MONTH_ID +") FROM " + TABLE_MONTHSTAT + ")";
