@@ -35,6 +35,10 @@ Project: YrrahMoney
 			devA:
 				visa statistics i AAC och även i ListView.
 
+			ext2:
+				Testa DB metoder, inserts, trigger, etc. Testa också eventuella korrigerings logik.
+				Dokumentera syntaxer.
+
 			ext4:
 				Kunna skriva in en siffra, sedan välja kategori.
 
