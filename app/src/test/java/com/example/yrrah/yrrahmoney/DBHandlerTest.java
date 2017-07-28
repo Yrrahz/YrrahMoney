@@ -50,4 +50,93 @@ public class DBHandlerTest {
         }
     }
 
+    @Test
+    public void getCategoryModel() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void getAllCategories() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void getCategoriesCount() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void updateCategory() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void deleteCategory() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void totalAmount() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void deleteAllCategoryData() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void addSubAmount() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void getSubAmountModel() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void getAllSubAmounts() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void getAllSubToCategory() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void updateSubAmount() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void deleteSubAmount() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void addMonth() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void getMonthModel() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void getAllMonths() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void returnMonthCount() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
+
+    @Test
+    public void deleteMonth() throws Exception {
+        assertFalse("Not completed yet",true);
+    }
 }
