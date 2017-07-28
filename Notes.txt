@@ -10,7 +10,7 @@ Project: YrrahMoney
 			devB - Compare months, more statistics
 			----
 			ext1 - ExpListView instead of ListView
-			ext2 - test-classes
+	☼		ext2 - test-classes
 			ext3 - Sharing statistics to GoogleDrive, or similair
 			ext4 - Android Wear functions
 			ext5 - Proper structure within the project

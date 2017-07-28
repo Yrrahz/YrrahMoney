@@ -141,7 +141,7 @@ public class DBHandler extends SQLiteOpenHelper{
         return returnValue;
     }
 
-    // Deleting a Category
+    // Deleting a Category TODO: Does this method need a CM object? I think just a String will do.
     public void deleteCategory(CategoryModel cm) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_CATEGORY, KEY_NAME + " = ?",
