@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
 
 /**
  * First Test Attempt, seems to work but takes a very long time...
+ * Remember to run the entire file and not specific methods OR refactor and create a new database
+ * in every method.. sounds bad, maybe there is a standard for this.
  *
  * Created by Yrrahz on 2017-07-28.
  */
@@ -36,7 +38,12 @@ public class DBHandlerTest {
 
     @Test
     public void addCategory() throws Exception {
-        //String testAddCatString = "category";
+        /**
+         * Apparently the "failsafe" mechanism to ensure that no 2 Categories can be created
+         * is located in (somewhere else). Which makes testing duplicates fairly hard.
+         *
+         * TODO : Find the method and test for duplicates
+         */
         CategoryModel categoryModel = new CategoryModel(testAddCatString, 1337);
 
         dbHandlerTest.addCategory(categoryModel);
