@@ -111,7 +111,7 @@ public class DBHandler extends SQLiteOpenHelper{
         return cmList;
     }
 
-    // Getting Categories count, TODO: not sure if I need this... Check!
+    // Getting Categories count, TODO: not sure if I need this... Check! (Only used in testCases)
     public int getCategoriesCount() {
         int count;
         String countQuery = "SELECT * FROM " + TABLE_CATEGORY;
@@ -127,6 +127,7 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     // Updating a Category
+    // TODO : What the hell is this updating and how??
     public int updateCategory(CategoryModel cm) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
