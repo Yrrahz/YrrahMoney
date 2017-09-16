@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
 @Config(constants = BuildConfig.class, sdk = 21, packageName = "com.example.yrrah.yrrahmoney")
 public class DBHandlerTest {
     private DBHandler dbHandlerTest;
-    private String testAddCatString = "category";
+    private String testAddCatString = "category"; // should maybe be local..
 
     @Before
     public void setUp() throws Exception {
@@ -163,11 +163,9 @@ public class DBHandlerTest {
 
         if(dbHandlerTest.getCategoryModel("deleteCat").getName().equals("deleteCat")){
             // If our Category has been added...
-            dbHandlerTest.deleteCategory(deleteCat); // ... Delete it!
 
-            // TODO : getCategoryModel is generating error instead of returning false. Fix! Or make deleteCategory() a boolean.
-            if(!dbHandlerTest.getCategoryModel("deleteCat").getName().equals("deleteCat")){
-                System.out.println("Category deleted.");
+            if(dbHandlerTest.deleteCategory("deleteCat")){ // ...delete it!
+                System.out.println("Category successfully deleted.");
                 assertTrue(true);
             }else{
                 assertTrue("Category not found or Category not deleted.",false);
@@ -194,31 +192,128 @@ public class DBHandlerTest {
 
     @Test
     public void deleteAllCategoryData() throws Exception {
-        /*
-        The problem with this method is that there is no "false" response on access methods which
-        are asked for a Category that doesn't exist. It instead just crash..
-         */
-        assertFalse("Not completed yet",true);
+        CategoryModel deleteAllCat1 = new CategoryModel("deleteAllCat1", 1337);
+        CategoryModel deleteAllCat2 = new CategoryModel("deleteAllCat2", 1338);
+        CategoryModel deleteAllCat3 = new CategoryModel("deleteAllCat3", 1339);
+        dbHandlerTest.addCategory(deleteAllCat1);
+        dbHandlerTest.addCategory(deleteAllCat2);
+        dbHandlerTest.addCategory(deleteAllCat3);
+
+        if(dbHandlerTest.getCategoriesCount() >= 3){
+            dbHandlerTest.deleteAllCategoryData();
+            if(dbHandlerTest.getCategoriesCount() == 0){
+                System.out.println("No categories found in the Database.");
+                assertTrue(true);
+            }else{
+                assertTrue("Can't confirm that the Categories has been deleted.",false);
+            }
+        }else{
+            assertTrue("Can't confirm categories has been created. Nothing to test deletion with.",false);
+        }
     }
     //</editor-fold>
+
+    /**
+     * This method can't test the addition of a subAmount directly. But since all Categories are
+     * unique, when we also creates a new Category here. There can ONLY be one subAmount for that
+     * Category. Based on that we can conclude this test to be true or false.
+     * @throws Exception <Any Exception>
+     */
     @Test
     public void addSubAmount() throws Exception {
-        assertFalse("Not completed yet",true);
+        CategoryModel addSubCategory = new CategoryModel("addSubCategory", 1337);
+        SubAmountModel addSubAmount = new SubAmountModel(100,100,"addSubAmount","addSubCategory");
+
+        dbHandlerTest.addCategory(addSubCategory);
+        dbHandlerTest.addSubAmount(addSubAmount);
+
+        List<SubAmountModel> addSubAmountTestList = dbHandlerTest.getAllSubToCategory(addSubCategory.getName());
+
+        if(addSubAmountTestList.isEmpty()){
+            assertTrue("The Category created is empty.",false);
+        }else if(addSubAmountTestList.size() != 1){
+            assertTrue("The Category does not contain the correct amount of SubAmounts.",false);
+        }else if(addSubAmountTestList.size() == 1){
+            System.out.println("The SubAmount is found. SubAmount = "+addSubAmountTestList.get(0).getEvent());
+            assertTrue(true);
+        }else{
+            assertTrue("Error while trying to populate the testList.",false);
+        }
     }
 
+    /**
+     * This test can't really work because SubAmount's ID is handled by the database
+     * by auto increment. So you can never know the individual ID of a SubAmount unless you check
+     * before. This is very timeconsuming and since this method is never used. Maybe should remove
+     * this method all together.
+     * @throws Exception <any Excemption>
+     */
+    /*
     @Test
     public void getSubAmountModel() throws Exception {
         assertFalse("Not completed yet",true);
-    }
+    }*/
 
+    /**
+     * This method can't test the addition of a subAmount directly. But since all Categories are
+     * unique, when we also creates a new Category here. There can ONLY be three subAmounts for that
+     * Category. Based on that we can conclude this test to be true or false.
+     * @throws Exception <Any Exception>
+     */
     @Test
     public void getAllSubAmounts() throws Exception {
-        assertFalse("Not completed yet",true);
+        CategoryModel getAllSubCategory = new CategoryModel("getAllSubCategory", 1337);
+        SubAmountModel addGetAllSubAmount1 = new SubAmountModel(100,100,"addGetAllSubAmount1","getAllSubCategory");
+        SubAmountModel addGetAllSubAmount2 = new SubAmountModel(100,100,"addGetAllSubAmount2","getAllSubCategory");
+        SubAmountModel addGetAllSubAmount3 = new SubAmountModel(100,100,"addGetAllSubAmount3","getAllSubCategory");
+
+        dbHandlerTest.addCategory(getAllSubCategory);
+        dbHandlerTest.addSubAmount(addGetAllSubAmount1);
+        dbHandlerTest.addSubAmount(addGetAllSubAmount2);
+        dbHandlerTest.addSubAmount(addGetAllSubAmount3);
+
+        List<SubAmountModel> getAllSubAmountTestList = dbHandlerTest.getAllSubToCategory(getAllSubCategory.getName());
+
+        if(getAllSubAmountTestList.isEmpty()){
+            assertTrue("The Category created is empty.",false);
+        }else if(getAllSubAmountTestList.size() != 3){
+            assertTrue("The Category does not contain the correct amount of SubAmounts.",false);
+        }else if(getAllSubAmountTestList.size() == 3){
+            System.out.println("The SubAmounts are found.\nSubAmount1 = "+getAllSubAmountTestList.get(0).getEvent());
+            System.out.println("SubAmount2 = "+getAllSubAmountTestList.get(1).getEvent());
+            System.out.println("SubAmount3 = "+getAllSubAmountTestList.get(2).getEvent());
+            assertTrue(true);
+        }else{
+            assertTrue("Error while trying to populate the testList.",false);
+        }
     }
 
     @Test
     public void getAllSubToCategory() throws Exception {
-        assertFalse("Not completed yet",true);
+        CategoryModel getAllSubToCategory = new CategoryModel("getAllSubToCategory", 1337);
+        SubAmountModel addGetAllSubAmount1 = new SubAmountModel(100,100,"addGetAllSubAmount1","getAllSubToCategory");
+        SubAmountModel addGetAllSubAmount2 = new SubAmountModel(100,100,"addGetAllSubAmount2","getAllSubToCategory");
+        SubAmountModel addGetAllSubAmount3 = new SubAmountModel(100,100,"addGetAllSubAmount3","getAllSubToCategory");
+
+        dbHandlerTest.addCategory(getAllSubToCategory);
+        dbHandlerTest.addSubAmount(addGetAllSubAmount1);
+        dbHandlerTest.addSubAmount(addGetAllSubAmount2);
+        dbHandlerTest.addSubAmount(addGetAllSubAmount3);
+
+        List<SubAmountModel> getAllSubToCategoryTestList = dbHandlerTest.getAllSubToCategory(getAllSubToCategory.getName());
+
+        if(getAllSubToCategoryTestList.isEmpty()){
+            assertTrue("The Category created is empty.",false);
+        }else if(getAllSubToCategoryTestList.size() != 3){
+            assertTrue("The Category does not contain the correct amount of SubAmounts.",false);
+        }else if(getAllSubToCategoryTestList.size() == 3){
+            System.out.println("The SubAmounts are found.\nSubAmount1 = "+getAllSubToCategoryTestList.get(0).getEvent());
+            System.out.println("SubAmount2 = "+getAllSubToCategoryTestList.get(1).getEvent());
+            System.out.println("SubAmount3 = "+getAllSubToCategoryTestList.get(2).getEvent());
+            assertTrue(true);
+        }else{
+            assertTrue("Error while trying to populate the testList.",false);
+        }
     }
 
     @Test

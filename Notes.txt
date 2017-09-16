@@ -13,7 +13,7 @@ Project: YrrahMoney
 	☼		ext2 - test-classes
 			ext3 - Sharing statistics to GoogleDrive, or similair
 			ext4 - Android Wear functions
-			ext5 - Proper structure within the project
+	☼		ext5 - Proper structure within the project
 			ext6 - Kunna skriva kommentarer på events
 			ext7 - Spara kategorier i veckor eller år utöver månader.
 			ext8 - Spara months som ett set i databasen.

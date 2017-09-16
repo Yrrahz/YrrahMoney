@@ -63,6 +63,12 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     // Getting one Category TODO: Restructure this, like SAM, IF I need it...
+
+    /**
+     * This method returns a Category specified with 'name' if it exists in the database.
+     * @param name The Name of the CategoryModel you want returned. Name is of course unique
+     * @return If found return a CategoryModel, if not, return null
+     */
     public CategoryModel getCategoryModel(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CATEGORY, new String[] { KEY_NAME, COL_TOTAL_AMOUNT },
@@ -111,7 +117,12 @@ public class DBHandler extends SQLiteOpenHelper{
         return cmList;
     }
 
-    // Getting Categories count, TODO: not sure if I need this... Check! (Only used in testCases)
+    // Getting Categories count, TODO: not sure if I need this... Check! (Only used in testCases for now)
+
+    /**
+     * Returns the amount of Categories in the database. NOT the combined values of the Categories.
+     * @return int
+     */
     public int getCategoriesCount() {
         int count;
         String countQuery = "SELECT * FROM " + TABLE_CATEGORY;
@@ -142,12 +153,17 @@ public class DBHandler extends SQLiteOpenHelper{
         return returnValue;
     }
 
-    // Deleting a Category TODO: Does this method need a CM object? I think just a String will do.
-    public void deleteCategory(CategoryModel cm) {
+    // Deleting a Category
+    public boolean deleteCategory(String categoryToBeDeleted) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CATEGORY, KEY_NAME + " = ?",
-                new String[] { String.valueOf(cm.getName()) });
-        db.close();
+        int deleted = db.delete(TABLE_CATEGORY, KEY_NAME + " = ?", new String[] { categoryToBeDeleted });
+
+        if(db.isOpen()){
+            db.close();
+        }
+
+        return deleted > 0;
+
     }
 
     public int totalAmount(){
