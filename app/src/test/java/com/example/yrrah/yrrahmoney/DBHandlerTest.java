@@ -316,28 +316,35 @@ public class DBHandlerTest {
         }
     }
 
+    /**
+     * This test is kind of useless. It proves that, with correct SubAmountID, you actually CAN
+     * update a SubAmount. However, since we will never be able to know about their ID, unless we do
+     * some List-trickery, and we would never need to know update SubAmounts, this test is useless.
+     * ... But it works.
+     * @throws Exception <any>
+     */
     @Test
     public void updateSubAmount() throws Exception {
 
         CategoryModel updateSubAmountCategory = new CategoryModel("updateSubAmountCategory", 1337);
-        SubAmountModel updateSubAmount1 = new SubAmountModel(100,100,"addUpdateSubAmount1","updateSubAmountCategory");
-        SubAmountModel updateSubAmount2 = new SubAmountModel(100,1337,"addUpdateSubAmount2","updateSubAmountCategory");
+        SubAmountModel updateSubAmount1 = new SubAmountModel(1,100,"addUpdateSubAmount1","updateSubAmountCategory");
 
         dbHandlerTest.addCategory(updateSubAmountCategory);
         dbHandlerTest.addSubAmount(updateSubAmount1);
 
         List<SubAmountModel> updateSubAmountTestList = dbHandlerTest.getAllSubToCategory("updateSubAmountCategory");
+        SubAmountModel updateSubAmount2 = new SubAmountModel(updateSubAmountTestList.get(0).getSubAmountId(),1337,"addUpdateSubAmount2","updateSubAmountCategory"); // This is needed to check what the ID of the SubAmmount turned out to be. As the Database is handling it by itself
 
         if(updateSubAmountTestList.isEmpty()){
             assertTrue("The created Category is empty.",false);
         }else if(updateSubAmountTestList.size() == 1){
-            int checkValue = updateSubAmountTestList.get(0).getAmount();
             dbHandlerTest.updateSubAmount(updateSubAmount2);
             updateSubAmountTestList = dbHandlerTest.getAllSubToCategory("updateSubAmountCategory");
             if(updateSubAmountTestList.isEmpty()){
                 assertTrue("The created Category is empty after update subAmount was run.",false);
-            }else if(updateSubAmountTestList.size() == 1 && updateSubAmountTestList.get(0).getAmount() == checkValue){ // I think this is wrong!!!!
-                System.out.println("The subAmount for the created Category was updated properly.");
+            }else if(updateSubAmountTestList.size() == 1 && updateSubAmountTestList.get(0).getAmount() == updateSubAmount2.getAmount()){ // I think this is wrong!!!!
+                System.out.println("The subAmount for the created Category was updated properly.\n"+
+                "Old amount = "+updateSubAmount1.getAmount()+"\nNew amount = " + updateSubAmount2.getAmount());
                 assertTrue(true);
             }else if(updateSubAmountTestList.size() == 1){
                 assertTrue("The subAmount for the Category was not updated properly.",false);
