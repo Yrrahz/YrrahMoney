@@ -318,7 +318,35 @@ public class DBHandlerTest {
 
     @Test
     public void updateSubAmount() throws Exception {
-        assertFalse("Not completed yet",true);
+
+        CategoryModel updateSubAmountCategory = new CategoryModel("updateSubAmountCategory", 1337);
+        SubAmountModel updateSubAmount1 = new SubAmountModel(100,100,"addUpdateSubAmount1","updateSubAmountCategory");
+        SubAmountModel updateSubAmount2 = new SubAmountModel(100,1337,"addUpdateSubAmount2","updateSubAmountCategory");
+
+        dbHandlerTest.addCategory(updateSubAmountCategory);
+        dbHandlerTest.addSubAmount(updateSubAmount1);
+
+        List<SubAmountModel> updateSubAmountTestList = dbHandlerTest.getAllSubToCategory("updateSubAmountCategory");
+
+        if(updateSubAmountTestList.isEmpty()){
+            assertTrue("The created Category is empty.",false);
+        }else if(updateSubAmountTestList.size() == 1){
+            int checkValue = updateSubAmountTestList.get(0).getAmount();
+            dbHandlerTest.updateSubAmount(updateSubAmount2);
+            updateSubAmountTestList = dbHandlerTest.getAllSubToCategory("updateSubAmountCategory");
+            if(updateSubAmountTestList.isEmpty()){
+                assertTrue("The created Category is empty after update subAmount was run.",false);
+            }else if(updateSubAmountTestList.size() == 1 && updateSubAmountTestList.get(0).getAmount() == checkValue){ // I think this is wrong!!!!
+                System.out.println("The subAmount for the created Category was updated properly.");
+                assertTrue(true);
+            }else if(updateSubAmountTestList.size() == 1){
+                assertTrue("The subAmount for the Category was not updated properly.",false);
+            }else{
+                assertTrue("Something went wrong with List<SubAmountModel> updateSubAmountTestList.",false);
+            }
+        }else{
+            assertTrue("Something went wrong. Check the Category.",false);
+        }
     }
 
     @Test
