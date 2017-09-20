@@ -302,7 +302,6 @@ public class DBHandler extends SQLiteOpenHelper{
         return subAmountList;
     }
 
-    // TODO: Test this!
     public int updateSubAmount(SubAmountModel sam) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -320,11 +319,16 @@ public class DBHandler extends SQLiteOpenHelper{
         return returnValue;
     }
 
-    // TODO: Test this!
+    // TODO: Fix this! It doesn't delete properly OR it takes too long time to delete (doubtful)
     public void deleteSubAmount(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?",
-                new String[] { String.valueOf(id) });
+
+        String sqlCommand = "DELETE FROM " + TABLE_SUBAMOUNT + " WHERE " + KEY_ID +
+                "=" + id + ";";
+        db.execSQL(sqlCommand);
+
+        /*db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) }); */
         if(db.isOpen()){
             db.close();
         }

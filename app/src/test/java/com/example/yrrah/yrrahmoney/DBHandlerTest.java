@@ -212,7 +212,7 @@ public class DBHandlerTest {
         }
     }
     //</editor-fold>
-
+    //<editor-fold desc="SubAmount methods">
     /**
      * This method can't test the addition of a subAmount directly. But since all Categories are
      * unique, when we also creates a new Category here. There can ONLY be one subAmount for that
@@ -241,18 +241,30 @@ public class DBHandlerTest {
         }
     }
 
-    /**
-     * This test can't really work because SubAmount's ID is handled by the database
-     * by auto increment. So you can never know the individual ID of a SubAmount unless you check
-     * before. This is very timeconsuming and since this method is never used. Maybe should remove
-     * this method all together.
-     * @throws Exception <any Excemption>
-     */
-    /*
     @Test
     public void getSubAmountModel() throws Exception {
-        assertFalse("Not completed yet",true);
-    }*/
+        CategoryModel getSubAmountCategory = new CategoryModel("getSubAmountCategory", 1337);
+        SubAmountModel getSubAmount = new SubAmountModel(1,100,"getSubAmount","getSubAmountCategory");
+
+        dbHandlerTest.addCategory(getSubAmountCategory);
+        dbHandlerTest.addSubAmount(getSubAmount);
+
+        List<SubAmountModel> getSubAmountModelTestList = dbHandlerTest.getAllSubToCategory(getSubAmountCategory.getName());
+
+        if(getSubAmountModelTestList.size() == 1 && getSubAmountModelTestList.get(0).getEvent().equals("getSubAmount")){
+            SubAmountModel addedSubAmount = getSubAmountModelTestList.get(0);
+            SubAmountModel receivedSubAmount = dbHandlerTest.getSubAmountModel(addedSubAmount.getSubAmountId());
+
+            if(addedSubAmount.getEvent().equals(receivedSubAmount.getEvent())){
+                System.out.println("The correct SubAmount is received.");
+                assertTrue(true);
+            }else{
+                assertTrue("The added SubAmount and the received SubAmount is not the same.",false);
+            }
+        }else{
+            assertTrue("Something went wrong.",false);
+        }
+    }
 
     /**
      * This method can't test the addition of a subAmount directly. But since all Categories are
@@ -342,7 +354,7 @@ public class DBHandlerTest {
             updateSubAmountTestList = dbHandlerTest.getAllSubToCategory("updateSubAmountCategory");
             if(updateSubAmountTestList.isEmpty()){
                 assertTrue("The created Category is empty after update subAmount was run.",false);
-            }else if(updateSubAmountTestList.size() == 1 && updateSubAmountTestList.get(0).getAmount() == updateSubAmount2.getAmount()){ // I think this is wrong!!!!
+            }else if(updateSubAmountTestList.size() == 1 && updateSubAmountTestList.get(0).getAmount() == updateSubAmount2.getAmount()){
                 System.out.println("The subAmount for the created Category was updated properly.\n"+
                 "Old amount = "+updateSubAmount1.getAmount()+"\nNew amount = " + updateSubAmount2.getAmount());
                 assertTrue(true);
@@ -358,9 +370,33 @@ public class DBHandlerTest {
 
     @Test
     public void deleteSubAmount() throws Exception {
-        assertFalse("Not completed yet",true);
-    }
 
+        CategoryModel deleteSubAmountCategory = new CategoryModel("deleteSubAmountCategory", 1337);
+        SubAmountModel deleteSubAmount = new SubAmountModel(1,100,"deleteSubAmount","deleteSubAmountCategory");
+
+        dbHandlerTest.addCategory(deleteSubAmountCategory);
+        dbHandlerTest.addSubAmount(deleteSubAmount);
+
+        List<SubAmountModel> deleteSubAmountCategoryTestList = dbHandlerTest.getAllSubToCategory("deleteSubAmountCategory");
+
+        if(deleteSubAmountCategoryTestList.size() != 1){
+            assertTrue("List<SubAmountModel> deleteSubAmountCategoryTestList does not contain the correct SubAmount.",false);
+        }else if(deleteSubAmountCategoryTestList.size() == 1){
+
+            dbHandlerTest.deleteSubAmount(deleteSubAmountCategoryTestList.get(0).getSubAmountId());
+
+            if(deleteSubAmountCategoryTestList.isEmpty()){
+                System.out.println("List<SubAmountModel> deleteSubAmountCategoryTestList is empty.");
+                assertTrue(true);
+            }else{
+                assertTrue("List<SubAmountModel> deleteSubAmountCategoryTestList is not empty, and did at some point contain the created SubAmount.",false);
+            }
+        }else{
+            assertTrue("Something went wrong, check List<SubAmountModel> deleteSubAmountCategoryTestList.",false);
+        }
+    }
+    //</editor-fold>
+    //<editor-fold desc="Month methods">
     @Test
     public void addMonth() throws Exception {
         assertFalse("Not completed yet",true);
@@ -385,4 +421,5 @@ public class DBHandlerTest {
     public void deleteMonth() throws Exception {
         assertFalse("Not completed yet",true);
     }
+    //</editor-fold>
 }
