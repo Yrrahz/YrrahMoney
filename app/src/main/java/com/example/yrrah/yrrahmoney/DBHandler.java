@@ -120,6 +120,7 @@ public class DBHandler extends SQLiteOpenHelper{
     // Getting Categories count, TODO: not sure if I need this... Check! (Only used in testCases for now)
 
     /**
+     * getCategoriesCount()
      * Returns the amount of Categories in the database. NOT the combined values of the Categories.
      * @return int
      */
@@ -154,6 +155,13 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     // Deleting a Category
+
+    /**
+     * deleteCategory()
+     * This method deletes a given Category in the database based on it's key name.
+     * @param categoryToBeDeleted - String
+     * @return True if deletion went through. False if something went wrong
+     */
     public boolean deleteCategory(String categoryToBeDeleted) {
         SQLiteDatabase db = this.getWritableDatabase();
         int deleted = db.delete(TABLE_CATEGORY, KEY_NAME + " = ?", new String[] { categoryToBeDeleted });
@@ -302,7 +310,6 @@ public class DBHandler extends SQLiteOpenHelper{
         return subAmountList;
     }
 
-    // TODO: Test this!
     public int updateSubAmount(SubAmountModel sam) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -320,11 +327,18 @@ public class DBHandler extends SQLiteOpenHelper{
         return returnValue;
     }
 
-    // TODO: Test this!
+    // TODO: Fix this! It doesn't delete properly OR it takes too long time to delete (doubtful), Could maybe have something to do with the fact that SubAmount is a weak entity.
     public void deleteSubAmount(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?",
-                new String[] { String.valueOf(id) });
+
+        /* String sqlCommand = "DELETE FROM " + TABLE_SUBAMOUNT + " WHERE " + KEY_ID +
+                "=" + id + ";";
+        db.execSQL(sqlCommand); */
+
+        Integer idInt = id;
+        int deleted = db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?", new String[] {idInt.toString()});
+        /*db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) }); */
         if(db.isOpen()){
             db.close();
         }
