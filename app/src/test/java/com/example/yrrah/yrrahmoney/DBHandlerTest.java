@@ -414,7 +414,17 @@ public class DBHandlerTest {
 
     @Test
     public void returnMonthCount() throws Exception {
-        assertFalse("Not completed yet",true);
+
+        MonthModel month = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
+        int preCount = dbHandlerTest.returnMonthCount();
+        dbHandlerTest.addMonth(month);
+
+        if(dbHandlerTest.returnMonthCount() -1 == preCount){
+            System.out.println("MonthCount contains a probable amount.");
+            assertTrue(true);
+        }else{
+            assertTrue("MonthCount does not contain a probable amount.",false);
+        }
     }
 
     @Test
