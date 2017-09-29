@@ -175,19 +175,31 @@ public class DBHandlerTest {
         }
     }
 
+
     @Test
     public void totalAmount() throws Exception {
 
-        //dbHandlerTest.deleteAllCategoryData();
-        /*
-        Create category..
-        Create subAmounts.. added to the category
-        Then call totalAmount and compare to the given subAmounts in our Category
-        if(true) assert true
-        else assert false
-         */
+        CategoryModel totalAmountCat1 = new CategoryModel("deleteAllCat1", 1337);
+        CategoryModel totalAmountCat2 = new CategoryModel("deleteAllCat2", 1338);
+        CategoryModel totalAmountCat3 = new CategoryModel("deleteAllCat3", 1339);
+        dbHandlerTest.addCategory(totalAmountCat1);
+        dbHandlerTest.addCategory(totalAmountCat2);
+        dbHandlerTest.addCategory(totalAmountCat3);
 
-        assertFalse("Not completed yet",true);
+        List<CategoryModel> listForTotAmount = dbHandlerTest.getAllCategories();
+        int totalAmount = 0;
+
+        for(CategoryModel cm : listForTotAmount){
+            totalAmount = totalAmount + cm.getTotalAmount();
+        }
+
+        if(totalAmount == dbHandlerTest.totalAmount()){
+            System.out.println("The total amount for the categories match the calculated value.\n"
+            + "Calculated amount: " + totalAmount + "\nGiven Amount: " + dbHandlerTest.totalAmount());
+            assertTrue(true);
+        }else{
+            assertTrue("The values doesn't match.",false);
+        }
     }
 
     @Test
