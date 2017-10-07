@@ -175,7 +175,6 @@ public class DBHandlerTest {
         }
     }
 
-
     @Test
     public void totalAmount() throws Exception {
 
@@ -433,18 +432,40 @@ public class DBHandlerTest {
         dbHandlerTest.addMonth(month1);
         dbHandlerTest.addMonth(month2);
 
-        if(dbHandlerTest.returnMonthCount() == 0){
-            assertTrue(true);
-        }else{
-            assertTrue(false);
-        }
+        if(dbHandlerTest.returnMonthCount() > 0){
+            List<MonthModel> listOfMonths = dbHandlerTest.getAllMonths();
+            MonthModel monthToTest = dbHandlerTest.getMonthModel(listOfMonths.get(0).getId());
 
-        assertFalse("Not completed yet",true);
+            if(listOfMonths.get(0).getId() == monthToTest.getId()){
+                System.out.println("Correct Month was retrieved.");
+                assertTrue(true);
+            }else{
+                assertTrue("The Month returned was not the same.",false);
+            }
+        }else{
+            assertTrue("The amount of Months in the database are not satisfactory.",false);
+        }
     }
 
     @Test
     public void getAllMonths() throws Exception {
-        assertFalse("Not completed yet",true);
+        MonthModel month1 = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
+        MonthModel month2 = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
+
+        dbHandlerTest.addMonth(month1);
+        dbHandlerTest.addMonth(month2);
+
+        if(dbHandlerTest.returnMonthCount() > 0){
+            List<MonthModel> listOfMonths = dbHandlerTest.getAllMonths();
+            if(listOfMonths.size() == dbHandlerTest.returnMonthCount()){
+                System.out.println("Correct amount of Months was retrieved.");
+                assertTrue(true);
+            }else{
+                assertTrue("The amount of months retrieved was not equal to the MonthCount.",false);
+            }
+        }else{
+            assertTrue("The amount of Months in the database are not satisfactory.",false);
+        }
     }
 
     @Test
@@ -464,7 +485,43 @@ public class DBHandlerTest {
 
     @Test
     public void deleteMonth() throws Exception {
-        assertFalse("Not completed yet",true);
+        int checkMonthCount = dbHandlerTest.returnMonthCount();
+        MonthModel month1 = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
+        dbHandlerTest.addMonth(month1);
+        List<MonthModel> listOfMonths = dbHandlerTest.getAllMonths();
+
+        dbHandlerTest.deleteMonth(listOfMonths.get(0).getId());
+
+        if(dbHandlerTest.returnMonthCount()-1 == checkMonthCount ){
+            System.out.println("The Month was deleted successfully.");
+            assertTrue(true);
+        }else{
+            assertTrue("The Month seems to not be deleted properly.",false);
+        }
+    }
+
+    @Test
+    public void deleteAllMonths() throws Exception {
+        MonthModel month1 = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
+        MonthModel month2 = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
+
+        dbHandlerTest.addMonth(month1);
+        dbHandlerTest.addMonth(month2);
+
+        if(dbHandlerTest.returnMonthCount() > 0){
+            dbHandlerTest.deleteAllMonths();
+            if(dbHandlerTest.returnMonthCount() == 0){
+                // Checking that you can still add Months...
+                dbHandlerTest.addMonth(month1);
+                dbHandlerTest.addMonth(month2);
+                System.out.println("The Month table was deleted successfully.");
+                assertTrue(true);
+            }else{
+                assertTrue("The Month table seems to not be deleted properly.",false);
+            }
+        }else{
+            assertTrue("The Month table doesn't contain data.",false);
+        }
     }
     //</editor-fold>
 }

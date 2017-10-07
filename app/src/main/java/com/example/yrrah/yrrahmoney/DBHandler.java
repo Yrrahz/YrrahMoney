@@ -171,7 +171,6 @@ public class DBHandler extends SQLiteOpenHelper{
         }
 
         return deleted > 0;
-
     }
 
     public int totalAmount(){
@@ -450,6 +449,15 @@ public class DBHandler extends SQLiteOpenHelper{
         if(db.isOpen()){
             db.close();
         }
+    }
+
+    public void deleteAllMonths(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MONTHSTAT);
+        String CREATE_MONTHSTAT_TABLE = "CREATE TABLE " + TABLE_MONTHSTAT + "("
+                + KEY_MONTH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_MONTH
+                + " INTEGER," + COL_TOTAL_AMOUNT + " INTEGER," + COL_INFO + " TEXT)";
+        db.execSQL(CREATE_MONTHSTAT_TABLE);
     }
 
     //</editor-fold>
