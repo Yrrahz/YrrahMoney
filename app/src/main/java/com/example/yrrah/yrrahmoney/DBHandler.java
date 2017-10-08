@@ -63,6 +63,12 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     // Getting one Category TODO: Restructure this, like SAM, IF I need it...
+
+    /**
+     * This method returns a Category specified with 'name' if it exists in the database.
+     * @param name The Name of the CategoryModel you want returned. Name is of course unique
+     * @return If found return a CategoryModel, if not, return null
+     */
     public CategoryModel getCategoryModel(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CATEGORY, new String[] { KEY_NAME, COL_TOTAL_AMOUNT },
@@ -111,7 +117,13 @@ public class DBHandler extends SQLiteOpenHelper{
         return cmList;
     }
 
-    // Getting Categories count, TODO: not sure if I need this... Check!
+    // Getting Categories count, TODO: not sure if I need this... Check! (Only used in testCases for now)
+
+    /**
+     * getCategoriesCount()
+     * Returns the amount of Categories in the database. NOT the combined values of the Categories.
+     * @return int
+     */
     public int getCategoriesCount() {
         int count;
         String countQuery = "SELECT * FROM " + TABLE_CATEGORY;
@@ -127,6 +139,7 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     // Updating a Category
+    // TODO : What the hell is this updating and how??
     public int updateCategory(CategoryModel cm) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -142,11 +155,22 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     // Deleting a Category
-    public void deleteCategory(CategoryModel cm) {
+
+    /**
+     * deleteCategory()
+     * This method deletes a given Category in the database based on it's key name.
+     * @param categoryToBeDeleted - String
+     * @return True if deletion went through. False if something went wrong
+     */
+    public boolean deleteCategory(String categoryToBeDeleted) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CATEGORY, KEY_NAME + " = ?",
-                new String[] { String.valueOf(cm.getName()) });
-        db.close();
+        int deleted = db.delete(TABLE_CATEGORY, KEY_NAME + " = ?", new String[] { categoryToBeDeleted });
+
+        if(db.isOpen()){
+            db.close();
+        }
+
+        return deleted > 0;
     }
 
     public int totalAmount(){
@@ -285,7 +309,6 @@ public class DBHandler extends SQLiteOpenHelper{
         return subAmountList;
     }
 
-    // TODO: Test this!
     public int updateSubAmount(SubAmountModel sam) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -303,11 +326,18 @@ public class DBHandler extends SQLiteOpenHelper{
         return returnValue;
     }
 
-    // TODO: Test this!
+    // TODO: Fix this! It doesn't delete properly OR it takes too long time to delete (doubtful), Could maybe have something to do with the fact that SubAmount is a weak entity.
     public void deleteSubAmount(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?",
-                new String[] { String.valueOf(id) });
+
+        /* String sqlCommand = "DELETE FROM " + TABLE_SUBAMOUNT + " WHERE " + KEY_ID +
+                "=" + id + ";";
+        db.execSQL(sqlCommand); */
+
+        Integer idInt = id;
+        int deleted = db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?", new String[] {idInt.toString()});
+        /*db.delete(TABLE_SUBAMOUNT, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) }); */
         if(db.isOpen()){
             db.close();
         }
@@ -419,6 +449,15 @@ public class DBHandler extends SQLiteOpenHelper{
         if(db.isOpen()){
             db.close();
         }
+    }
+
+    public void deleteAllMonths(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MONTHSTAT);
+        String CREATE_MONTHSTAT_TABLE = "CREATE TABLE " + TABLE_MONTHSTAT + "("
+                + KEY_MONTH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_MONTH
+                + " INTEGER," + COL_TOTAL_AMOUNT + " INTEGER," + COL_INFO + " TEXT)";
+        db.execSQL(CREATE_MONTHSTAT_TABLE);
     }
 
     //</editor-fold>
@@ -542,13 +581,13 @@ public class DBHandler extends SQLiteOpenHelper{
         addMonth(month);
         month = new MonthModel(1,1250,"Entertainment 90.7;Hygiene 0.0;Rent 0.0;Eating_Out 0.0;Food 4.08;Transport 5.22;");
         addMonth(month);
-        month = new MonthModel(2,3500,"Entertainment 50.7;Hygiene 12.0;Rent 38.0;Eating_Out 0.0;Food 4.08;Transport 5.22;");
+        month = new MonthModel(2,3500,"Text 2;");
         addMonth(month);
-        month = new MonthModel(3,10345,"Text3 hej");
+        month = new MonthModel(3,10345,"Text 3;");
         addMonth(month);
-        month = new MonthModel(4,5100,"Text4 hej;");
+        month = new MonthModel(4,5100,"Text 4;");
         addMonth(month);
-        month = new MonthModel(5,5300,"Text5 3;");
+        month = new MonthModel(5,5300,"Text 5;");
         addMonth(month);
     }
 }
