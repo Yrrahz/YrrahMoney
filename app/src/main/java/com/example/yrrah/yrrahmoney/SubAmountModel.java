@@ -1,10 +1,12 @@
 package com.example.yrrah.yrrahmoney;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by Yrrah on 2017-05-11.
  */
 
-public class SubAmountModel {
+public class SubAmountModel implements Comparable{
     int subAmountId; // Barely used because DB handles it itself by auto-increment
     int amount;
     String event;
@@ -49,5 +51,13 @@ public class SubAmountModel {
 
     public String getRefID() {
         return refID;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        if(o instanceof SubAmountModel && ((SubAmountModel) o).getSubAmountId() == this.subAmountId){
+            return 1;
+        }
+        return 0;
     }
 }
