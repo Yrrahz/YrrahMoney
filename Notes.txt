@@ -8,6 +8,7 @@ Project: YrrahMoney
 	☼		dev9 - Develop MainActivity, THE update functionality
 			devA - Visual presentation, diagrams, icons, pictures
 			devB - Compare months, more statistics
+			devC - New proposed Database structure
 			----
 			ext1 - ExpListView instead of ListView
 	☼		ext2 - test-classes
@@ -34,6 +35,9 @@ Project: YrrahMoney
 
 			devA:
 				visa statistics i AAC och även i ListView.
+				
+			devC:	
+				Istället för att spara en "month", spara alla event rakt upp-och-ner och istället presentera datan per deras timestamp.
 
 			ext2:
 				Testa DB metoder, inserts, trigger, etc. Testa också eventuella korrigerings logik.
