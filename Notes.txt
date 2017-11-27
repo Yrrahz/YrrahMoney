@@ -37,7 +37,7 @@ Project: YrrahMoney
 				visa statistics i AAC och även i ListView.
 				
 			devC:	
-				Istället för att spara en "month", spara alla event rakt upp-och-ner och istället presentera datan per deras timestamp.
+				Istället för att spara en "month", spara alla event rakt upp-och-ner och istället presentera datan per deras timestamp. Kanske skulle spara eventsen för sig och bara länka till dom i databasen istället för att spara identiska textsträngar i varje event.
 
 			ext2:
 				Testa DB metoder, inserts, trigger, etc. Testa också eventuella korrigerings logik.
