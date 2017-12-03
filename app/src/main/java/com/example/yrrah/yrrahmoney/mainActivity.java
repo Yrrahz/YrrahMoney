@@ -30,36 +30,14 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        runUpdateCheck(); // TODO : Fix this #"!#% method...!
     }
 
     public void monthButtonPressed(View view){
-        monthStatShow = false;
-        data.clear();
-        if(monthList != null ){
-            monthList.clear();
-        }
-        DBHandler dbHandler = new DBHandler(this);
-        monthList = dbHandler.getAllMonths();
-
-
-        for(MonthModel m : monthList){
-            Map<String, String> listViewElement = new HashMap<>(2);
-            listViewElement.put("heading", monthConverter(m.getMonth()));
-            listViewElement.put("subItem", Integer.toString(m.getTotalAmount()));
-
-            data.add(listViewElement);
-        }
-
-        SimpleAdapter adapter = new SimpleAdapter(this, data,
-                android.R.layout.simple_list_item_2, // <-- Standard lib item, contains both Item and SubItem in listView
-                new String[] {"heading","subItem"}, // <-- must be same as dateMap's keys
-                new int[] {android.R.id.text1, android.R.id.text2});
-
-        ListView monthListView = (ListView) findViewById(R.id.mainListView);
-        monthListView.setOnItemClickListener(this);
-        monthListView.setAdapter(adapter);
+        // Populate listview in mainActivity.
+        // Take a chosen month and show all categories and their value for that month
+        // ... maybe some visual effects, similair to what Month's %-data would do.
+        // This will take some time to do.
+        Toast.makeText(getApplicationContext(),"MonthButton pressed.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -76,14 +54,15 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //data.get(position).get("heading") => Month
         //data.get(position).get("subItem") => Value
-
+        Toast.makeText(getApplicationContext(),"Clicked on item in list.", Toast.LENGTH_SHORT).show();
+        /*
         if(monthStatShow){
             return;
         }
         data.clear();
         DBHandler dbHandler = new DBHandler(this);
-        MonthModel monthChosen = dbHandler.getMonthModel(monthList.get(position).getId());
-        String[] x = monthChosen.getText().split("[;\\s]");
+        //MonthModel monthChosen = dbHandler.getMonthModel(monthList.get(position).getId());
+        //String[] x = monthChosen.getText().split("[;\\s]");
 
         for(int i = 0 ; i < x.length ; i = i+2){
             Map<String, String> listViewElement = new HashMap<>(2);
@@ -100,7 +79,7 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         ListView monthListView = (ListView) findViewById(R.id.mainListView);
         monthListView.setAdapter(adapter);
-        monthStatShow = true;
+        monthStatShow = true; */
     }
 
     private String monthConverter(int monthNr){
@@ -147,88 +126,5 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void testDB2(View view){
         DBHandler dbHandler = new DBHandler(this);
         dbHandler.populateDatabaseWithData();
-    }
-
-    private void runUpdateCheck(){
-
-        DBHandler dbHandler = new DBHandler(this);
-        Calendar cal=Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
-        int monthCount = dbHandler.returnMonthCount();
-        int currentMonth = Integer.parseInt(month_date.format(cal.getTime())); // month name as 1,2,3...10,11,12.
-
-
-        if(monthCount == -1){
-            Toast.makeText(getApplicationContext(),"Database initiation failed.", Toast.LENGTH_LONG).show();
-            return;
-        }else if(monthCount == 0){
-            saveMonth(currentMonth);
-            return;
-        }
-
-        int latestMonth = dbHandler.returnLatestMonth();
-
-        if(currentMonth > latestMonth || (latestMonth == 12 && currentMonth == 1)){ // If a month has passed. Save last month, delete all categories, start over...
-            saveMonth(latestMonth, dbHandler);
-        }
-
-        /*
-        DBHandler dbHandler = new DBHandler(this);
-        Calendar cal=Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
-
-        int currentMonth = Integer.parseInt(month_date.format(cal.getTime())); // month name as 1,2,3...10,11,12.
-        int latestMonth = dbHandler.returnLatestMonth();
-
-        // TODO : Add support for new year.. 1 !> 12
-        if(currentMonth > latestMonth){ // If a month has passed. Save last month, delete all categories, start over...
-            saveMonth(latestMonth, dbHandler);
-        }*/
-    }
-
-    private void saveMonth(int currentMonth){
-        DBHandler dbHandler = new DBHandler(this);
-        MonthModel newMonth = new MonthModel();
-        newMonth.setMonth(currentMonth);
-        dbHandler.addMonth(newMonth);
-    }
-
-    private void saveMonth(int latestMonth, DBHandler dbHandler){
-        MonthModel newMonth = new MonthModel();
-
-        newMonth.setMonth(latestMonth);
-        newMonth.setTotalAmount(dbHandler.totalAmount());
-        newMonth.setText(monthStatistics(dbHandler));
-
-        dbHandler.addMonth(newMonth);
-
-        dbHandler.deleteAllCategoryData();
-    }
-
-    private String monthStatistics(DBHandler dbHandler){
-        List<CategoryModel> categoryList= dbHandler.getAllCategories();
-        int tmp,total = 0, size = categoryList.size();
-        String[] testStringList = new String[size];
-        double[] testList = new double[size];
-        int i = 0;
-
-        for(CategoryModel cm : categoryList){
-            testStringList[i] = cm.getName();
-            tmp = cm.getTotalAmount();
-            testList[i] = tmp;
-            total = total + tmp;
-            i++;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        while(i > 0){
-            sb.append(testStringList[i-1]);
-            sb.append(" ");
-            sb.append(round((testList[i-1] / total)*10000.00) / 100.00);
-            sb.append(";");
-            i--;
-        }
-
-        return sb.toString();
     }
 }
