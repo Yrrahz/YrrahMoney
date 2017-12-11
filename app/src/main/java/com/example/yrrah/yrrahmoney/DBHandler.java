@@ -32,6 +32,7 @@ public class DBHandler extends SQLiteOpenHelper{
     // Category Table Column names
     private static final String KEY_NAME = "name"; //key
     private static final String COL_TOTAL_AMOUNT = "totalamount";
+    private static final String COL_DATE = "categoryDate";
     // SubAmount Table Column names
     private static final String KEY_ID = "subAmountId"; //key <-- could be the same as KEY_NAME
     private static final String COL_AMOUNT = "amount";
@@ -462,11 +463,16 @@ public class DBHandler extends SQLiteOpenHelper{
 
     //</editor-fold>
 
+    // CREATE TABLE test (keyName VARCHAR(50), totalAmount INTEGER, timeInfo DATE FORMAT 'YYYY-MM-DD')
+    // DATE format seems to have no affect at all. I would need another trigger to format it.. but I
+    // would rather do that in Java instead.
+    // Will be considdering DATE as a normal INT and use that as a 'DATE' instead.
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO : Save these strings somewhere else, they are also used in deleteAllCategoryData
+        // TODO : Save these strings somewhere else, they are also used in deleteAllCategoryData. Maybe call them from their models??
         String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
-                + KEY_NAME + " VARCHAR(50) PRIMARY KEY," + COL_TOTAL_AMOUNT + " INTEGER)";
+                + KEY_NAME + " VARCHAR(50) PRIMARY KEY," + COL_TOTAL_AMOUNT + " INTEGER,"
+                + COL_DATE + " INTEGER)";
 
         String CREATE_SUBAMOUNT_TABLE = "CREATE TABLE " + TABLE_SUBAMOUNT + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_AMOUNT + " INTEGER,"
@@ -487,8 +493,6 @@ public class DBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_SUBAMOUNT_TABLE);
         db.execSQL(CREATE_MONTHSTAT_TABLE);
         db.execSQL(CREATE_TRIGGER);
-
-        //setFirstMonth(db); // TODO : This might be a very costly "check" if there is data in TABLE_MONTHSTAT. Check if so and if needed...
     }
 
     @Override
@@ -500,21 +504,6 @@ public class DBHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MONTHSTAT);
         // Creating tables again
         onCreate(db);
-    }
-
-    private void setFirstMonth(SQLiteDatabase db){
-        String count = "SELECT COUNT(*) FROM " + TABLE_MONTHSTAT;
-        Cursor cursor = db.rawQuery(count, null);
-        cursor.moveToFirst();
-
-        if(!(cursor.getInt(0) > 0)) {
-            Calendar cal=Calendar.getInstance();
-            SimpleDateFormat month_date = new SimpleDateFormat("MM", Locale.ENGLISH);
-
-            MonthModel month = new MonthModel(Integer.parseInt(month_date.format(cal.getTime())),0,"indexMonth");
-            addMonth(month,db);
-        }
-        cursor.close();
     }
 
     private void addMonth(MonthModel monthModel, SQLiteDatabase db) {
@@ -542,7 +531,6 @@ public class DBHandler extends SQLiteOpenHelper{
         addCategory(cm);
         cm = new CategoryModel("Entertainment",0);
         addCategory(cm);
-        /*
         cm = new CategoryModel("Gifts",0);
         addCategory(cm);
         cm = new CategoryModel("Bills",0);
@@ -554,7 +542,7 @@ public class DBHandler extends SQLiteOpenHelper{
         addCategory(cm);
         cm = new CategoryModel("Other Income",0);
         addCategory(cm);
-        */
+
 
         // SubAmount
         SubAmountModel sam = new SubAmountModel(100,100,"Resa hem","Transport");
@@ -575,19 +563,5 @@ public class DBHandler extends SQLiteOpenHelper{
         addSubAmount(sam);
         sam = new SubAmountModel(19,250,"Fyra nya spel","Entertainment");
         addSubAmount(sam);
-
-        // Month
-        MonthModel month = new MonthModel(0,1500,"Entertainment 44.3;Food 21.2;Transport 34.5;");
-        addMonth(month);
-        month = new MonthModel(1,1250,"Entertainment 90.7;Hygiene 0.0;Rent 0.0;Eating_Out 0.0;Food 4.08;Transport 5.22;");
-        addMonth(month);
-        month = new MonthModel(2,3500,"Text 2;");
-        addMonth(month);
-        month = new MonthModel(3,10345,"Text 3;");
-        addMonth(month);
-        month = new MonthModel(4,5100,"Text 4;");
-        addMonth(month);
-        month = new MonthModel(5,5300,"Text 5;");
-        addMonth(month);
     }
 }

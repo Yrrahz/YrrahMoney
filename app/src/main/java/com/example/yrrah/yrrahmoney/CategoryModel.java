@@ -9,6 +9,7 @@ package com.example.yrrah.yrrahmoney;
 public class CategoryModel {
     private String name;
     private int totalAmount;
+    private int date;
 
     public CategoryModel(String name, int totalAmount){
         this.name = name;
@@ -27,12 +28,20 @@ public class CategoryModel {
         this.totalAmount = totalAmount;
     }
 
+    public void setDate(int date){
+        this.date = date;
+    }
+
     public String getName(){
         return name;
     }
 
     public int getTotalAmount() {
         return totalAmount;
+    }
+
+    public int getDate(){
+        return date;
     }
 
     @Override

@@ -82,38 +82,12 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
         monthStatShow = true; */
     }
 
-    private String monthConverter(int monthNr){
-        switch (monthNr){
-            case 1 :
-                return "Januari";
-            case 2 :
-                return "Februari";
-            case 3 :
-                return "Mars";
-            case 4 :
-                return "April";
-            case 5 :
-                return "Maj";
-            case 6 :
-                return "Juni";
-            case 7 :
-                return "Juli";
-            case 8 :
-                return "Augusti";
-            case 9 :
-                return "September";
-            case 10 :
-                return "Oktober";
-            case 11 :
-                return "November";
-            case 12 :
-                return "December";
-            default:
-                return "custom";
-        }
-    }
-
-    public void stat2ButtonPressed(View view){
+    /**
+     * Populate the listview on mainActivity, showing stats from previous month abd current stats
+     * from this month.
+     * @param view - The android view
+     */
+    public void stat2ButtonPressed(View view){ // TODO : Change name!!! If I decide to use this method.
         // stat2Button Pressed...
         Toast.makeText(getApplicationContext(),"stat2ButtonPressed", Toast.LENGTH_SHORT).show();
     }
@@ -123,6 +97,7 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
+    // Not supposed to exist when app is finished.
     public void testDB2(View view){
         DBHandler dbHandler = new DBHandler(this);
         dbHandler.populateDatabaseWithData();
