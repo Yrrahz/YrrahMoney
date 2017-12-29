@@ -10,4 +10,7 @@
     <string name="totalAmount">Total Amount:</string>
     <string name="month">Month</string>
     <string name="stat">Stats</string>
+    <string name="income">Income</string>
+    <string name="expenditure">Expenditure</string>
+    <string name="total">Total</string>
 </resources>

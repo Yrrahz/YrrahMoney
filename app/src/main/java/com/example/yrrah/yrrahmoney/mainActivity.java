@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +22,7 @@ import java.util.Map;
 
 import static java.lang.Math.round;
 
-public class mainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class mainActivity extends AppCompatActivity {
 
     List<Map<String, String>> data = new ArrayList<>();
     List<MonthModel> monthList;
@@ -30,6 +32,7 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        addNumberForLooks();
     }
 
     public void monthButtonPressed(View view){
@@ -48,38 +51,6 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
         }else{
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //data.get(position).get("heading") => Month
-        //data.get(position).get("subItem") => Value
-        Toast.makeText(getApplicationContext(),"Clicked on item in list.", Toast.LENGTH_SHORT).show();
-        /*
-        if(monthStatShow){
-            return;
-        }
-        data.clear();
-        DBHandler dbHandler = new DBHandler(this);
-        //MonthModel monthChosen = dbHandler.getMonthModel(monthList.get(position).getId());
-        //String[] x = monthChosen.getText().split("[;\\s]");
-
-        for(int i = 0 ; i < x.length ; i = i+2){
-            Map<String, String> listViewElement = new HashMap<>(2);
-            listViewElement.put("heading", x[i]);
-            listViewElement.put("subItem", x[i+1]);
-
-            data.add(listViewElement);
-        }
-
-        SimpleAdapter adapter = new SimpleAdapter(this, data,
-                android.R.layout.simple_list_item_2, // <-- Standard lib item, contains both Item and SubItem in listView
-                new String[] {"heading","subItem"}, // <-- must be same as dateMap's keys
-                new int[] {android.R.id.text1, android.R.id.text2});
-
-        ListView monthListView = (ListView) findViewById(R.id.mainListView);
-        monthListView.setAdapter(adapter);
-        monthStatShow = true; */
     }
 
     /**
@@ -101,5 +72,15 @@ public class mainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void testDB2(View view){
         DBHandler dbHandler = new DBHandler(this);
         dbHandler.populateDatabaseWithData();
+    }
+
+    private void addNumberForLooks(){
+        TextView incomeNr = (TextView) findViewById(R.id.incomeNr);
+        TextView expenditureNr = (TextView) findViewById(R.id.expenditureNr);
+        TextView totalNr = (TextView) findViewById(R.id.totalNr);
+
+        incomeNr.setText(String.format("%s","20 000"));
+        expenditureNr.setText(String.format("%s","15 000"));
+        totalNr.setText(String.format("%s","5 000"));
     }
 }
