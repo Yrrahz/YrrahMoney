@@ -7,18 +7,20 @@ import android.support.annotation.NonNull;
  */
 
 public class SubAmountModel implements Comparable{
-    int subAmountId; // Barely used because DB handles it itself by auto-increment
-    int amount;
+    private int subAmountId; // Barely used because DB handles it itself by auto-increment
+    private int amount;
+    private int date;
     String event;
     String refID; // Reference to Category
 
     public SubAmountModel(){}
 
-    public SubAmountModel(int subAmountId, int amount, String event, String refID){
+    public SubAmountModel(int subAmountId, int amount, String event, String refID, int date){
         this.subAmountId = subAmountId;
         this.amount = amount;
         this.event = event;
         this.refID = refID;
+        this.date = date;
     }
 
     public void setSubAmountId(int subAmountId){
@@ -37,6 +39,10 @@ public class SubAmountModel implements Comparable{
         this.refID = refID;
     }
 
+    public void setDate(int date){
+        this.date = date;
+    }
+
     public int getSubAmountId() {
         return subAmountId;
     }
@@ -51,6 +57,10 @@ public class SubAmountModel implements Comparable{
 
     public String getRefID() {
         return refID;
+    }
+
+    public int getDate(){
+        return date;
     }
 
     @Override

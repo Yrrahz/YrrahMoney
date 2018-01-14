@@ -15,7 +15,7 @@ public class SubAmountModelTest {
 
     @Before
     public void setUp() throws Exception {
-        SAMT = new SubAmountModel(10,1000,"Test Event","Reference ID");
+        SAMT = new SubAmountModel(10,1000,"Test Event","Reference ID",20180106);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class SubAmountModelTest {
 
     @Test
     public void compareTo(){
-        SubAmountModel anotherSAMT1 = new SubAmountModel(10,1000,"Test Event","Reference ID");
-        SubAmountModel anotherSAMT2 = new SubAmountModel(11,1000,"Test Event","Reference ID");
+        SubAmountModel anotherSAMT1 = new SubAmountModel(10,1000,"Test Event","Reference ID",20180106);
+        SubAmountModel anotherSAMT2 = new SubAmountModel(11,1000,"Test Event","Reference ID",20180106);
 
         if(SAMT.compareTo(anotherSAMT1) == 1 && SAMT.compareTo(anotherSAMT2) == 0){
             assertTrue(true);

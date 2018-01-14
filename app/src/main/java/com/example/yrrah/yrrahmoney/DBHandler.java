@@ -38,6 +38,7 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COL_AMOUNT = "amount";
     private static final String COL_EVENT = "event";
     private static final String COL_REFID = "refid";
+    private static final String COL_SUB_DATE = "subDate";
     // Monthstat Table Column names
     private static final String KEY_MONTH_ID = "monthId";
     private static final String COL_MONTH = "monthName";
@@ -477,6 +478,7 @@ public class DBHandler extends SQLiteOpenHelper{
         String CREATE_SUBAMOUNT_TABLE = "CREATE TABLE " + TABLE_SUBAMOUNT + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + COL_AMOUNT + " INTEGER,"
                 + COL_EVENT + " VARCHAR(50)," + COL_REFID + " VARCHAR(50),"
+                + COL_SUB_DATE + " INTEGER,"
                 + "CONSTRAINT fk FOREIGN KEY(" + COL_REFID
                 + ") REFERENCES "+ TABLE_CATEGORY + "(" + KEY_NAME + "))";
 
@@ -545,23 +547,23 @@ public class DBHandler extends SQLiteOpenHelper{
 
 
         // SubAmount
-        SubAmountModel sam = new SubAmountModel(100,100,"Resa hem","Transport");
+        SubAmountModel sam = new SubAmountModel(100,100,"Resa hem","Transport",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(212,130,"Resa bort", "Transport");
+        sam = new SubAmountModel(212,130,"Resa bort", "Transport",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(3421,180,"Mat", "Food");
+        sam = new SubAmountModel(3421,180,"Mat", "Food",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(434,250,"Ett nytt spel","Entertainment");
+        sam = new SubAmountModel(434,250,"Ett nytt spel","Entertainment",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(511,350,"Två nya spel","Entertainment");
+        sam = new SubAmountModel(511,350,"Två nya spel","Entertainment",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(623,450,"Tre nya spel","Entertainment");
+        sam = new SubAmountModel(623,450,"Tre nya spel","Entertainment",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(756,1250,"Fyra nya spel","Entertainment");
+        sam = new SubAmountModel(756,1250,"Fyra nya spel","Entertainment",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(800,1450,"Fyra nya spel","Entertainment");
+        sam = new SubAmountModel(800,1450,"Fyra nya spel","Entertainment",20180106);
         addSubAmount(sam);
-        sam = new SubAmountModel(19,250,"Fyra nya spel","Entertainment");
+        sam = new SubAmountModel(19,250,"Fyra nya spel","Entertainment",20180106);
         addSubAmount(sam);
     }
 }

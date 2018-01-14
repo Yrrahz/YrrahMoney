@@ -4,20 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import static java.lang.Math.round;
@@ -32,7 +24,7 @@ public class mainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addNumberForLooks();
+        setup();
     }
 
     public void monthButtonPressed(View view){
@@ -63,7 +55,7 @@ public class mainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"stat2ButtonPressed", Toast.LENGTH_SHORT).show();
     }
 
-    public void categoryButtonPressed(View view){
+    public void addButtonPressed(View view){
         Intent intent = new Intent(this, Dev4Activity.class);
         startActivity(intent);
     }
@@ -74,13 +66,20 @@ public class mainActivity extends AppCompatActivity {
         dbHandler.populateDatabaseWithData();
     }
 
-    private void addNumberForLooks(){
+    private void setup(){
         TextView incomeNr = (TextView) findViewById(R.id.incomeNr);
         TextView expenditureNr = (TextView) findViewById(R.id.expenditureNr);
         TextView totalNr = (TextView) findViewById(R.id.totalNr);
 
+        DBHandler dbHandler = new DBHandler(this);
+        CategoryModel cm = new CategoryModel("Income", 1000);
+        dbHandler.addCategory(cm);
+        cm = new CategoryModel("Expenditure", -500);
+        dbHandler.addCategory(cm);
+
+
         incomeNr.setText(String.format("%s","20 000"));
         expenditureNr.setText(String.format("%s","15 000"));
-        totalNr.setText(String.format("%s","5 000"));
+        totalNr.setText(String.format("%s",dbHandler.totalAmount()));
     }
 }

@@ -233,7 +233,7 @@ public class DBHandlerTest {
     @Test
     public void addSubAmount() throws Exception {
         CategoryModel addSubCategory = new CategoryModel("addSubCategory", 1337);
-        SubAmountModel addSubAmount = new SubAmountModel(100,100,"addSubAmount","addSubCategory");
+        SubAmountModel addSubAmount = new SubAmountModel(100,100,"addSubAmount","addSubCategory",20180106);
 
         dbHandlerTest.addCategory(addSubCategory);
         dbHandlerTest.addSubAmount(addSubAmount);
@@ -255,7 +255,7 @@ public class DBHandlerTest {
     @Test
     public void getSubAmountModel() throws Exception {
         CategoryModel getSubAmountCategory = new CategoryModel("getSubAmountCategory", 1337);
-        SubAmountModel getSubAmount = new SubAmountModel(1,100,"getSubAmount","getSubAmountCategory");
+        SubAmountModel getSubAmount = new SubAmountModel(1,100,"getSubAmount","getSubAmountCategory",20180106);
 
         dbHandlerTest.addCategory(getSubAmountCategory);
         dbHandlerTest.addSubAmount(getSubAmount);
@@ -286,9 +286,9 @@ public class DBHandlerTest {
     @Test
     public void getAllSubAmounts() throws Exception {
         CategoryModel getAllSubCategory = new CategoryModel("getAllSubCategory", 1337);
-        SubAmountModel addGetAllSubAmount1 = new SubAmountModel(100,100,"addGetAllSubAmount1","getAllSubCategory");
-        SubAmountModel addGetAllSubAmount2 = new SubAmountModel(100,100,"addGetAllSubAmount2","getAllSubCategory");
-        SubAmountModel addGetAllSubAmount3 = new SubAmountModel(100,100,"addGetAllSubAmount3","getAllSubCategory");
+        SubAmountModel addGetAllSubAmount1 = new SubAmountModel(100,100,"addGetAllSubAmount1","getAllSubCategory",20180106);
+        SubAmountModel addGetAllSubAmount2 = new SubAmountModel(100,100,"addGetAllSubAmount2","getAllSubCategory",20180106);
+        SubAmountModel addGetAllSubAmount3 = new SubAmountModel(100,100,"addGetAllSubAmount3","getAllSubCategory",20180106);
 
         dbHandlerTest.addCategory(getAllSubCategory);
         dbHandlerTest.addSubAmount(addGetAllSubAmount1);
@@ -314,9 +314,9 @@ public class DBHandlerTest {
     @Test
     public void getAllSubToCategory() throws Exception {
         CategoryModel getAllSubToCategory = new CategoryModel("getAllSubToCategory", 1337);
-        SubAmountModel addGetAllSubAmount1 = new SubAmountModel(100,100,"addGetAllSubAmount1","getAllSubToCategory");
-        SubAmountModel addGetAllSubAmount2 = new SubAmountModel(100,100,"addGetAllSubAmount2","getAllSubToCategory");
-        SubAmountModel addGetAllSubAmount3 = new SubAmountModel(100,100,"addGetAllSubAmount3","getAllSubToCategory");
+        SubAmountModel addGetAllSubAmount1 = new SubAmountModel(100,100,"addGetAllSubAmount1","getAllSubToCategory",20180106);
+        SubAmountModel addGetAllSubAmount2 = new SubAmountModel(100,100,"addGetAllSubAmount2","getAllSubToCategory",20180106);
+        SubAmountModel addGetAllSubAmount3 = new SubAmountModel(100,100,"addGetAllSubAmount3","getAllSubToCategory",20180106);
 
         dbHandlerTest.addCategory(getAllSubToCategory);
         dbHandlerTest.addSubAmount(addGetAllSubAmount1);
@@ -350,13 +350,13 @@ public class DBHandlerTest {
     public void updateSubAmount() throws Exception {
 
         CategoryModel updateSubAmountCategory = new CategoryModel("updateSubAmountCategory", 1337);
-        SubAmountModel updateSubAmount1 = new SubAmountModel(1,100,"addUpdateSubAmount1","updateSubAmountCategory");
+        SubAmountModel updateSubAmount1 = new SubAmountModel(1,100,"addUpdateSubAmount1","updateSubAmountCategory",20180106);
 
         dbHandlerTest.addCategory(updateSubAmountCategory);
         dbHandlerTest.addSubAmount(updateSubAmount1);
 
         List<SubAmountModel> updateSubAmountTestList = dbHandlerTest.getAllSubToCategory("updateSubAmountCategory");
-        SubAmountModel updateSubAmount2 = new SubAmountModel(updateSubAmountTestList.get(0).getSubAmountId(),1337,"addUpdateSubAmount2","updateSubAmountCategory"); // This is needed to check what the ID of the SubAmmount turned out to be. As the Database is handling it by itself
+        SubAmountModel updateSubAmount2 = new SubAmountModel(updateSubAmountTestList.get(0).getSubAmountId(),1337,"addUpdateSubAmount2","updateSubAmountCategory",20180106); // This is needed to check what the ID of the SubAmmount turned out to be. As the Database is handling it by itself
 
         if(updateSubAmountTestList.isEmpty()){
             assertTrue("The created Category is empty.",false);
@@ -383,7 +383,7 @@ public class DBHandlerTest {
     public void deleteSubAmount() throws Exception {
 
         CategoryModel deleteSubAmountCategory = new CategoryModel("deleteSubAmountCategory", 1337);
-        SubAmountModel deleteSubAmount = new SubAmountModel(1,100,"deleteSubAmount","deleteSubAmountCategory");
+        SubAmountModel deleteSubAmount = new SubAmountModel(1,100,"deleteSubAmount","deleteSubAmountCategory",20180106);
 
         dbHandlerTest.addCategory(deleteSubAmountCategory);
         dbHandlerTest.addSubAmount(deleteSubAmount);
