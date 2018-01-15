@@ -78,8 +78,8 @@ public class mainActivity extends AppCompatActivity {
         dbHandler.addCategory(cm);
 
 
-        incomeNr.setText(String.format("%s","20 000"));
-        expenditureNr.setText(String.format("%s","15 000"));
+        incomeNr.setText(String.format("%s","20 000 000")); // two last zeros not visible
+        expenditureNr.setText(String.format("%s","150 000")); // looks ok
         totalNr.setText(String.format("%s",dbHandler.totalAmount()));
     }
 }
