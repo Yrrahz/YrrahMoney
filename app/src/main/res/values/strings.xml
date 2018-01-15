@@ -13,4 +13,5 @@
     <string name="income">Income</string>
     <string name="expenditure">Expenditure</string>
     <string name="total">Total</string>
+    <string name="quickAdd">Quick Add</string>
 </resources>

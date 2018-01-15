@@ -29,13 +29,11 @@
         android:layout_height="wrap_content"
         android:text="@string/month"
         android:onClick="monthButtonPressed"
-        android:layout_marginEnd="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintLeft_toRightOf="@+id/buttonAddAndConfig"
-        android:layout_marginLeft="8dp"
         app:layout_constraintRight_toLeftOf="@+id/stat2"
-        android:layout_marginRight="8dp" />
+        android:layout_marginStart="8dp" />
 
     <Button
         android:id="@+id/stat2"
@@ -74,7 +72,7 @@
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_name"
-        android:layout_marginLeft="50dp" />
+        android:layout_marginStart="50dp" />
 
     <TextView
         android:id="@+id/expenditure"
@@ -98,13 +96,14 @@
         android:background="@color/colorAccentDarker"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenditure" />
+        app:layout_constraintTop_toBottomOf="@+id/expenditure"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="16dp"
         android:fontFamily="serif"
         android:text="@string/total"
@@ -114,21 +113,22 @@
 
     <TextView
         android:id="@+id/incomeNr"
-        android:layout_width="228dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="60dp"
+        android:layout_width="182dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="130dp"
         android:ems="10"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="@+id/income"
-        android:layout_marginTop="0dp"
-        app:layout_constraintLeft_toRightOf="@+id/expenditure" />
+        android:layout_marginEnd="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/income"
+        app:layout_constraintHorizontal_bias="0.521"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
     <TextView
         android:id="@+id/expenditureNr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="0dp"
         android:ems="10"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/expenditure"
@@ -138,12 +138,50 @@
         android:id="@+id/totalNr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="0dp"
         android:ems="10"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/total"
         app:layout_constraintLeft_toLeftOf="@+id/expenditureNr" />
+
+    <EditText
+        android:id="@+id/quickAddNr"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:hint="@string/addAmount"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintRight_toLeftOf="@+id/quickAddSpinner"
+        app:layout_constraintTop_toTopOf="@+id/quickAdd" />
+
+    <Spinner
+        android:id="@+id/quickAddSpinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/quickAddNr" />
+
+    <Button
+        android:id="@+id/quickAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="0dp"
+        android:text="@string/quickAdd"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddAndConfig"
+        app:layout_constraintRight_toLeftOf="@+id/quickAddNr"
+        app:layout_constraintTop_toBottomOf="@+id/total"
+        app:layout_constraintVertical_bias="0.503"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
 
