@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ public class mainActivity extends AppCompatActivity {
     List<Map<String, String>> data = new ArrayList<>();
     List<MonthModel> monthList;
     boolean monthStatShow = false;
+    String spinnerCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,17 @@ public class mainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void quickAdd(View view){ // TODO : Add quickAdd functionality
+
+        EditText quickAddNr = (EditText) findViewById(R.id.quickAddNr); // amount added in quickAdd
+        String test = quickAddNr.getText().toString();
+        if(!test.equals("")){
+            int quickAddInt = Integer.parseInt(test);
+        }else{
+            Toast.makeText(getApplicationContext(),"No value added", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // Not supposed to exist when app is finished.
     public void testDB2(View view){
         DBHandler dbHandler = new DBHandler(this);
@@ -71,15 +87,55 @@ public class mainActivity extends AppCompatActivity {
         TextView expenditureNr = (TextView) findViewById(R.id.expenditureNr);
         TextView totalNr = (TextView) findViewById(R.id.totalNr);
 
+        Spinner dropDownList = (Spinner) findViewById(R.id.quickAddSpinner);
+
         DBHandler dbHandler = new DBHandler(this);
-        CategoryModel cm = new CategoryModel("Income", 1000);
+        CategoryModel cm = new CategoryModel("Income", 0);
         dbHandler.addCategory(cm);
-        cm = new CategoryModel("Expenditure", -500);
+        cm = new CategoryModel("Expenditure", 0);
         dbHandler.addCategory(cm);
+
+        List<CategoryModel> categoryModelList = dbHandler.getAllCategories();
 
 
         incomeNr.setText(String.format("%s","20 000"));
         expenditureNr.setText(String.format("%s","150 000"));
         totalNr.setText(String.format("%s",dbHandler.totalAmount()));
+
+
+        // Populate the DropDown eventchoice list
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,convertCategoryList(categoryModelList));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropDownList.setAdapter(adapter);
+
+        dropDownList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerCategory = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spinnerCategory = null;
+            }
+        });
+
+    }
+
+    /**
+     * Helpmethod to convert a list of CategoryModels to ArrayList<String>.
+     * Since Category names are unique, we don't need to remove duplicates.
+     *
+     * TODO : Only include expenditure categories, since quickAdd currently only supports expenditure.
+     *
+     * @param categoryModelList - List of categories in model form
+     * @return categoryNames - List of categories in ArrayList<String> form
+     */
+    private ArrayList<String> convertCategoryList(List<CategoryModel> categoryModelList){
+        ArrayList<String> categoryNames = new ArrayList<>();
+        for(CategoryModel cm : categoryModelList){
+            categoryNames.add(cm.getName());
+        }
+        return categoryNames;
     }
 }
