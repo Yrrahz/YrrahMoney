@@ -90,16 +90,27 @@ public class mainActivity extends AppCompatActivity {
         Spinner dropDownList = (Spinner) findViewById(R.id.quickAddSpinner);
 
         DBHandler dbHandler = new DBHandler(this);
+        // ===== ===== TEST DATA ===== =====
         CategoryModel cm = new CategoryModel("Income", 0);
         dbHandler.addCategory(cm);
         cm = new CategoryModel("Expenditure", 0);
         dbHandler.addCategory(cm);
 
+        SubAmountModel sm = new SubAmountModel(1,200,"Vinst","Income",20180106);
+        dbHandler.addSubAmount(sm);
+        sm = new SubAmountModel(2,-150,"test","Expenditure",20180106);
+        dbHandler.addSubAmount(sm);
+        sm = new SubAmountModel(3,20000,"Lön","Income",20180106);
+        dbHandler.addSubAmount(sm);
+        // ===== ===== TEST DATA ===== =====
+
         List<CategoryModel> categoryModelList = dbHandler.getAllCategories();
+        List<SubAmountModel> transactionList = dbHandler.getAllSubAmounts();
 
+        int[] incExp = getIncomeExpenditure(transactionList);
 
-        incomeNr.setText(String.format("%s","20 000"));
-        expenditureNr.setText(String.format("%s","150 000"));
+        incomeNr.setText(String.format("%s",incExp[0]));
+        expenditureNr.setText(String.format("%s",incExp[1]));
         totalNr.setText(String.format("%s",dbHandler.totalAmount()));
 
 
@@ -119,14 +130,11 @@ public class mainActivity extends AppCompatActivity {
                 spinnerCategory = null;
             }
         });
-
     }
 
     /**
      * Helpmethod to convert a list of CategoryModels to ArrayList<String>.
      * Since Category names are unique, we don't need to remove duplicates.
-     *
-     * TODO : Only include expenditure categories, since quickAdd currently only supports expenditure.
      *
      * @param categoryModelList - List of categories in model form
      * @return categoryNames - List of categories in ArrayList<String> form
@@ -137,5 +145,26 @@ public class mainActivity extends AppCompatActivity {
             categoryNames.add(cm.getName());
         }
         return categoryNames;
+    }
+
+    /**
+     * This is a help method to sort of what transactions are incoms and expenditures.
+     *
+     * @param transactionList - List of all transactions in the Database
+     * @return int[] - int[0] contains all incomes and int[1] all expenditures.
+     */
+    private int[] getIncomeExpenditure(List<SubAmountModel> transactionList){
+
+        int[] incExp = {0,0};
+
+        for(SubAmountModel sam : transactionList){
+            int amount = sam.getAmount();
+            if(amount > 0){
+                incExp[0] = incExp[0] + amount;
+            }else{
+                incExp[1] = incExp[1] + amount;
+            }
+        }
+        return incExp;
     }
 }
