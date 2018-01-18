@@ -13,7 +13,9 @@ public class SubAmountModel implements Comparable{
     String event;
     String refID; // Reference to Category
 
-    public SubAmountModel(){}
+    public SubAmountModel(){
+        this.date = 0;
+    }
 
     public SubAmountModel(int subAmountId, int amount, String event, String refID, int date){
         this.subAmountId = subAmountId;

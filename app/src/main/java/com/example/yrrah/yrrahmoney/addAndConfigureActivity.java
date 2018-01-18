@@ -1,7 +1,9 @@
 package com.example.yrrah.yrrahmoney;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -102,10 +104,29 @@ public class addAndConfigureActivity extends AppCompatActivity {
      */
     // TODO : Finish this.
     public void onShowButtonClicked(View view){
-        //Toast.makeText(getApplicationContext(),"Show button clicked", Toast.LENGTH_SHORT).show();
-        //DBHandler db = new DBHandler(this);
-        //List<SubAmountModel> list = db.getAllSubAmounts();
-        //Toast.makeText(getApplicationContext(),"Show button clicked", Toast.LENGTH_SHORT).show();
+        StringBuilder sb = new StringBuilder();
+        for(SubAmountModel sm : subAmountModelList){
+            sb.append(sm.getEvent());
+            sb.append("\n");
+            sb.append(sm.getAmount());
+            sb.append("\n");
+            sb.append(sm.getDate());
+            sb.append("\n\n");
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Event Statistics:");
+        builder.setCancelable(true);
+        builder.setMessage(sb.toString());
+
+        builder.setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     /**
