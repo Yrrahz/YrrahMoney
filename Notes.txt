@@ -8,7 +8,7 @@ Project: YrrahMoney
 	☼		dev9 - Develop MainActivity, THE update functionality
 			devA - Visual presentation, diagrams, icons, pictures
 			devB - Compare months, more statistics
-			devC - New proposed Database structure
+	✔		devC - New proposed Database structure
 			----
 			ext1 - ExpListView instead of ListView
 	☼		ext2 - test-classes
