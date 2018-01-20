@@ -2,7 +2,11 @@ package com.example.yrrah.yrrahmoney;
 
 import android.support.annotation.NonNull;
 
+import java.util.Calendar;
+
 /**
+ * Model for SubAmount
+ *
  * Created by Yrrah on 2017-05-11.
  */
 
@@ -11,10 +15,10 @@ public class SubAmountModel implements Comparable{
     private int amount;
     private int date;
     String event;
-    String refID; // Reference to Category
+    private String refID; // Reference to Category
 
     public SubAmountModel(){
-        this.date = 0;
+        this.date = 0; // this is to ensure we always have an int value, incase some method would crash if it would getDate() and receive a null value.
     }
 
     public SubAmountModel(int subAmountId, int amount, String event, String refID, int date){
@@ -22,7 +26,11 @@ public class SubAmountModel implements Comparable{
         this.amount = amount;
         this.event = event;
         this.refID = refID;
-        this.date = date;
+        if(date == 0){
+            setDate(0);
+        }else{
+            this.date = date;
+        }
     }
 
     public void setSubAmountId(int subAmountId){
@@ -42,7 +50,12 @@ public class SubAmountModel implements Comparable{
     }
 
     public void setDate(int date){
-        this.date = date;
+        Calendar now = Calendar.getInstance();
+        if (date == 0) {
+            this.date = now.get(Calendar.YEAR)*10000 + (now.get(Calendar.MONTH)+1)*100 + now.get(Calendar.DATE);
+        } else {
+            this.date = date;
+        }
     }
 
     public int getSubAmountId() {

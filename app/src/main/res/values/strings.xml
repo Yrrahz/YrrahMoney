@@ -3,6 +3,7 @@
     <string name="categoryButtonText">Add</string>
     <string name="addCategoryButton">Add Category</string>
     <string name="addAmount">Add Amount</string>
+    <string name="addEvent">Add Event</string>
     <string name="category1Text">Category1Text</string>
     <string name="category2text">Category2Text</string>
     <string name="category3text">Category3Text</string>
@@ -14,4 +15,7 @@
     <string name="expenditure">Expenditure</string>
     <string name="total">Total</string>
     <string name="quickAdd">Quick Add</string>
+    <string name="show">Show</string>
+    <string name="chooseFromList">Choose from list</string>
+    <string name="profit">Profit?</string>
 </resources>

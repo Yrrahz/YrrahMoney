@@ -74,7 +74,7 @@ public class mainActivity extends AppCompatActivity {
             int quickAddInt = Integer.parseInt(nrInput)*(-1);
             DBHandler dbHandler = new DBHandler(this);
 
-            SubAmountModel sm = new SubAmountModel(1,quickAddInt,"QuickAdd",spinnerCategory,20180106); // TODO : Fix current date.
+            SubAmountModel sm = new SubAmountModel(1,quickAddInt,"QuickAdd",spinnerCategory,0);
             dbHandler.addSubAmount(sm);
 
             quickAddNr.setText("");

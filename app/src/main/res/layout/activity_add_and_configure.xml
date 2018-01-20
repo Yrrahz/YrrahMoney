@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="@color/colorPrimaryDark"
-            android:text="Add Event"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/addEvent" />
 
         <RadioButton
             android:id="@+id/chooseList"
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="@color/colorPrimaryDark"
-            android:text="Choose From List"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/chooseFromList" />
     </RadioGroup>
 
     <TextView
@@ -81,7 +81,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:ems="10"
-        android:hint="Add Event"
+        android:hint="@string/addEvent"
         android:inputType="text"
         tools:layout_editor_absoluteX="98dp"
         tools:layout_editor_absoluteY="234dp" />
@@ -108,10 +108,10 @@
         android:id="@+id/showEventsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="show"
         android:layout_alignBottom="@+id/totalAmountText"
         android:layout_alignEnd="@+id/addAndConfigureTextView"
-        android:onClick="onShowButtonClicked"/>
+        android:onClick="onShowButtonClicked"
+        android:text="@string/show" />
 
     <Spinner
         android:id="@+id/eventDropDownList"
@@ -120,5 +120,17 @@
         android:layout_above="@+id/addEvent"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="25dp" />
+
+    <CheckBox
+        android:id="@+id/profitCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/addAndConfigureNumber"
+        android:layout_alignBottom="@+id/addAndConfigureNumber"
+        android:layout_marginEnd="7dp"
+        android:layout_toStartOf="@+id/addAndConfigureButton"
+        android:text="@string/profit"
+        android:textColor="@color/colorAccentDarker"
+        app:buttonTint="@color/colorAccentDarker" />
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -46,7 +47,14 @@ public class addAndConfigureActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
 
         EditText editNumberToAdd = (EditText) findViewById(R.id.addAndConfigureNumber);
-        int numberToAdd = Integer.parseInt(editNumberToAdd.getText().toString());
+        CheckBox profitCheck = (CheckBox) findViewById(R.id.profitCheck);
+
+        int numberToAdd;
+        if(profitCheck.isChecked()){
+            numberToAdd = Integer.parseInt(editNumberToAdd.getText().toString());
+        }else{
+            numberToAdd = Integer.parseInt(editNumberToAdd.getText().toString()) * (-1);
+        }
 
         if(radioButton){ // if "Add Event" is checked, chose the text from that input
             EditText editEventToAdd = (EditText) findViewById(R.id.addEvent);

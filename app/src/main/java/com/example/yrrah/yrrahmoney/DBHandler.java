@@ -7,11 +7,8 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * This class is handling all traffic to and from the Database.
@@ -220,10 +217,10 @@ public class DBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        //values.put(KEY_ID, sam.getSubAmountId());
         values.put(COL_AMOUNT, sam.getAmount());
         values.put(COL_EVENT, sam.getEvent());
         values.put(COL_REFID, sam.getRefID());
+        values.put(COL_SUB_DATE, sam.getDate());
         // Inserting Row
         db.insert(TABLE_SUBAMOUNT, null, values);
         db.close(); // Closing database connection
@@ -298,6 +295,7 @@ public class DBHandler extends SQLiteOpenHelper{
                 sam.setAmount(c.getInt(c.getColumnIndex(COL_AMOUNT)));
                 sam.setEvent(c.getString(c.getColumnIndex(COL_EVENT)));
                 sam.setRefID(c.getString(c.getColumnIndex(COL_REFID)));
+                sam.setDate(c.getInt(c.getColumnIndex(COL_SUB_DATE)));
 
                 subAmountList.add(sam);
             } while (c.moveToNext());
